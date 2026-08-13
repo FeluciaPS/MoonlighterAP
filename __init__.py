@@ -1,0 +1,1 @@
+from .world import MoonlighterWorld as MoonlighterWorld
