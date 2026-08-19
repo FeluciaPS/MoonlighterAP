@@ -25,7 +25,7 @@ option_groups = [
         "Goal Options",
         [Goal],
     ),
-      OptionGroup(
+    OptionGroup(
         "Other Randomizer Options",
         [DeathLink],
     ),

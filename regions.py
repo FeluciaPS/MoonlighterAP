@@ -5,16 +5,8 @@ if TYPE_CHECKING:
     from .world import MoonlighterWorld
 
 from BaseClasses import Region
+from .data import DUNGEON_NAMES, SHOP_NAMES
 
-# TODO: Names like this should probably be exiled to a file
-# but that's a future me problem
-DUNGEON_NAMES = [
-    "Golem",
-    "Forest",
-    "Desert",
-    "Tech",
-    # "Unknown" doesn't belong here, because it's not a real dungeon
-]
 
 def create_and_connect_regions(world: MoonlighterWorld):
     create_regions(world)
@@ -40,14 +32,13 @@ def create_regions(world: MoonlighterWorld):
     regions += [
         # Unknown Dungeon doesn't have floors
         Region("Unknown Dungeon", world.player, world.multiworld),
+    ]
 
-        # Various shops are easier to define as locations
-        # may even be worth splitting these further down the line
-        Region("Hawker", world.player, world.multiworld),
-        Region("Le Retailer", world.player, world.multiworld),
-        Region("The Wooden Hat", world.player, world.multiworld),
-        Region("Vulcan's Forge", world.player, world.multiworld),
-        # The Banker isn't real and cannot hurt you.
+    # Various shops are easier to define as regions
+    # may even be worth splitting these further down the line
+    regions += [
+        Region(shop, world.player, world.multiworld) 
+            for shop in SHOP_NAMES
     ]
     
     world.multiworld.regions += regions
@@ -64,6 +55,9 @@ def connect_regions(world: MoonlighterWorld):
         region_1.connect(region_2, f'{dungeon} Dungeon II')
         region_2.connect(region_3, f'{dungeon} Dungeon III')
 
-    for name in ["Unknown Dungeon", "Hawker", "Le Retailer", "The Wooden Hat", "Vulcan's Forge"]:
+    for name in SHOP_NAMES:
         region = world.get_region(name)
         town.connect(region, name)
+
+    unknown_dungeon = world.get_region("Unknown Dungeon")
+    town.connect(unknown_dungeon, "Unknown Dungeon")
