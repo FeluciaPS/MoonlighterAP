@@ -11,6 +11,7 @@ class MoonlighterOptions(PerGameCommonOptions):
 
     # Other Options
     death_link: DeathLink
+    progressive_floors: ProgressiveFloors
 
     '''
     Some option plans so I don't forget them:
@@ -27,6 +28,6 @@ option_groups = [
     ),
     OptionGroup(
         "Other Randomizer Options",
-        [DeathLink],
+        [DeathLink, ProgressiveFloors],
     ),
 ]

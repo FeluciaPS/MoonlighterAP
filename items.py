@@ -4,6 +4,7 @@ from typing import TYPE_CHECKING
 
 from BaseClasses import Item, ItemClassification
 from .data.items import item_names
+from .data import DUNGEON_NAMES
 
 if TYPE_CHECKING:
     from .world import MoonlighterWorld
@@ -14,10 +15,15 @@ ITEM_NAME_TO_ID = {
     "Unlock Desert Dungeon": 3,
     "Unlock Tech Dungeon": 4,
 
-    "Golem Key": 5,
-    "Forest Key": 6,
-    "Desert Key": 7,
-    "Tech Key": 8,
+    "Progressive Golem Floor": 5,
+    "Progressive Forest Floor": 6,
+    "Progressive Desert Floor": 7,
+    "Progressive Tech Floor": 8,
+
+    "Golem Key": 9,
+    "Forest Key": 10,
+    "Desert Key": 11,
+    "Tech Key": 12,
 
     "Filler Item": 1000,
 }
@@ -48,10 +54,12 @@ def create_item_object(world: MoonlighterWorld, name: str):
 
 def create_all_items(world: MoonlighterWorld) -> None:
     itempool: list[Item] = []
-
-    itempool += [
-        world.create_item(item) for item in item_names.PROGRESSION_ITEMS
-    ]
+    for dungeon in DUNGEON_NAMES:
+        if world.options.progressive_floors:
+            itempool += [world.create_item(f"Progressive {dungeon} Floor") for _ in range(3)]
+        else:
+            itempool += [world.create_item(f"Unlock {dungeon} Dungeon")]
+        itempool += [world.create_item(f"{dungeon} Key")]
 
     # Compare item pool size to location size, and fill what's left with
     # filler items.

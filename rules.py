@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 from rule_builder.options import OptionFilter
 from rule_builder.rules import Has, HasAll, Rule, True_
 
-from .option_groups import Goal
+from .option_groups import Goal, ProgressiveFloors
 
 if TYPE_CHECKING:
     from .world import MoonlighterWorld
@@ -17,16 +17,31 @@ def set_all_rules(world: MoonlighterWorld) -> None:
 
 
 def set_all_entrance_rules(world: MoonlighterWorld) -> None:
-    golem_entrance = world.get_entrance("Golem Dungeon I")
-    forest_entrance = world.get_entrance("Forest Dungeon I")
-    desert_entrance = world.get_entrance("Desert Dungeon I")
-    tech_entrance = world.get_entrance("Tech Dungeon I")
+    golem_floor_1 = world.get_entrance("Golem Dungeon I")
+    golem_floor_2 = world.get_entrance("Golem Dungeon II")
+    golem_floor_3 = world.get_entrance("Golem Dungeon III")
+    forest_floor_1 = world.get_entrance("Forest Dungeon I")
+    forest_floor_2 = world.get_entrance("Forest Dungeon II")
+    forest_floor_3 = world.get_entrance("Forest Dungeon III")
+    desert_floor_1 = world.get_entrance("Desert Dungeon I")
+    desert_floor_2 = world.get_entrance("Desert Dungeon II")
+    desert_floor_3 = world.get_entrance("Desert Dungeon III")
+    tech_floor_1 = world.get_entrance("Tech Dungeon I")
+    tech_floor_2 = world.get_entrance("Tech Dungeon II")
+    tech_floor_3 = world.get_entrance("Tech Dungeon III")
     unknown_entrance = world.get_entrance("Unknown Dungeon")
-
-    world.set_rule(golem_entrance, Has("Unlock Golem Dungeon"))
-    world.set_rule(forest_entrance, Has("Unlock Forest Dungeon"))
-    world.set_rule(desert_entrance, Has("Unlock Desert Dungeon"))
-    world.set_rule(tech_entrance, Has("Unlock Tech Dungeon"))
+    world.set_rule(golem_floor_1, Has("Unlock Golem Dungeon") | Has("Progressive Golem Floor", 1))
+    world.set_rule(golem_floor_2, OptionFilter(ProgressiveFloors, False) | Has("Progressive Golem Floor", 2))
+    world.set_rule(golem_floor_3, OptionFilter(ProgressiveFloors, False) | Has("Progressive Golem Floor", 3))
+    world.set_rule(forest_floor_1, Has("Unlock Forest Dungeon") | Has("Progressive Forest Floor", 1))
+    world.set_rule(forest_floor_2, OptionFilter(ProgressiveFloors, False) | Has("Progressive Forest Floor", 2))
+    world.set_rule(forest_floor_3, OptionFilter(ProgressiveFloors, False) | Has("Progressive Forest Floor", 3))
+    world.set_rule(desert_floor_1, Has("Unlock Desert Dungeon") | Has("Progressive Desert Floor", 1))
+    world.set_rule(desert_floor_2, OptionFilter(ProgressiveFloors, False) | Has("Progressive Desert Floor", 2))
+    world.set_rule(desert_floor_3, OptionFilter(ProgressiveFloors, False) | Has("Progressive Desert Floor", 3))
+    world.set_rule(tech_floor_1, Has("Unlock Tech Dungeon") | Has("Progressive Tech Floor", 1))
+    world.set_rule(tech_floor_2, OptionFilter(ProgressiveFloors, False) | Has("Progressive Tech Floor", 2))
+    world.set_rule(tech_floor_3, OptionFilter(ProgressiveFloors, False) | Has("Progressive Tech Floor", 3))
     world.set_rule(unknown_entrance, HasAll("Golem Key", "Forest Key", "Desert Key", "Tech Key"))
 
 def set_all_location_rules(world: MoonlighterWorld) -> None:
