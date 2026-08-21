@@ -56,6 +56,9 @@ def create_regular_locations(world: MoonlighterWorld) -> None:
 
         region_3_locations = get_location_names_with_ids([f"Defeat {BOSS_NAMES[dungeon]}"])
 
+        region_1.add_locations(region_1_locations, MoonlighterLocation)
+        region_3.add_locations(region_3_locations, MoonlighterLocation)
+
         # Hawker locations
         hawker_locations_preboss = [
             location for location, value in hawker_locations.INTERNAL_LOCATION_IDS.items()
@@ -66,10 +69,7 @@ def create_regular_locations(world: MoonlighterWorld) -> None:
             location for location, value in hawker_locations.INTERNAL_LOCATION_IDS.items()
             if value % 4 == 0
         ]
-
-        region_1.add_locations(region_1_locations, MoonlighterLocation)
         region_1.add_locations(hawker_locations_preboss, MoonlighterLocation)
-        region_3.add_locations(region_3_locations, MoonlighterLocation)
         region_3.add_locations(hawker_locations_postboss, MoonlighterLocation)
 
 
