@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from BaseClasses import Location
-from .data import DUNGEON_NAMES, BOSS_NAMES, town_locations, golem_locations, forest_locations, desert_locations, tech_locations
+from .data import DUNGEON_NAMES, BOSS_NAMES, town_locations, golem_locations, forest_locations, desert_locations, tech_locations, hawker_locations, forge_locations
 
 from .items import MoonlighterItem
 from .option_groups import goal_options
@@ -19,6 +19,8 @@ LOCATION_NAME_TO_ID = {
     **forest_locations.LOCATION_IDS,
     **desert_locations.LOCATION_IDS,
     **tech_locations.LOCATION_IDS,
+    **hawker_locations.LOCATION_IDS,
+    **forge_locations.LOCATION_IDS
 }
 
 
@@ -49,12 +51,26 @@ def create_regular_locations(world: MoonlighterWorld) -> None:
 
         region_1_locations = get_location_names_with_ids([
             f"{dungeon} Note {n+1}" for n in range(3)
+            
         ])
 
         region_3_locations = get_location_names_with_ids([f"Defeat {BOSS_NAMES[dungeon]}"])
 
+        # Hawker locations
+        hawker_locations_preboss = [
+            location for location, value in hawker_locations.INTERNAL_LOCATION_IDS.items()
+            if value % 4 != 0
+        ]
+            
+        hawker_locations_postboss = [
+            location for location, value in hawker_locations.INTERNAL_LOCATION_IDS.items()
+            if value % 4 == 0
+        ]
+
         region_1.add_locations(region_1_locations, MoonlighterLocation)
+        region_1.add_locations(hawker_locations_preboss, MoonlighterLocation)
         region_3.add_locations(region_3_locations, MoonlighterLocation)
+        region_3.add_locations(hawker_locations_postboss, MoonlighterLocation)
 
 
 def create_events(world: MoonlighterWorld) -> None:
