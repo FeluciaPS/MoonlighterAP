@@ -61,12 +61,12 @@ def create_regular_locations(world: MoonlighterWorld) -> None:
 
         # Hawker locations
         hawker_locations_preboss = [
-            location for location, value in hawker_locations.INTERNAL_LOCATION_IDS.items()
+            location for location, value in hawker_locations.LOCATION_IDS.items()
             if value % 4 != 0
         ]
             
         hawker_locations_postboss = [
-            location for location, value in hawker_locations.INTERNAL_LOCATION_IDS.items()
+            location for location, value in hawker_locations.LOCATION_IDS.items()
             if value % 4 == 0
         ]
         region_1.add_locations(hawker_locations_preboss, MoonlighterLocation)
