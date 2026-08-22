@@ -7,6 +7,8 @@ from rule_builder.rules import Has, HasAll, Rule, True_
 
 from .option_groups import Goal
 
+from .data import DUNGEON_NAMES
+
 if TYPE_CHECKING:
     from .world import MoonlighterWorld
 
@@ -17,16 +19,12 @@ def set_all_rules(world: MoonlighterWorld) -> None:
 
 
 def set_all_entrance_rules(world: MoonlighterWorld) -> None:
-    golem_entrance = world.get_entrance("Golem Dungeon I")
-    forest_entrance = world.get_entrance("Forest Dungeon I")
-    desert_entrance = world.get_entrance("Desert Dungeon I")
-    tech_entrance = world.get_entrance("Tech Dungeon I")
+    numerals = ["I", "II", "III"]
+    for dungeon in DUNGEON_NAMES:
+        for floor in range(3):
+            dungeon_floor = world.get_entrance(f"{dungeon} Dungeon {numerals[floor]}")
+            world.set_rule(dungeon_floor, Has(f"Unlock {dungeon} Dungeon") | Has(f"Progressive {dungeon} Floor", floor + 1))
     unknown_entrance = world.get_entrance("Unknown Dungeon")
-
-    world.set_rule(golem_entrance, Has("Unlock Golem Dungeon"))
-    world.set_rule(forest_entrance, Has("Unlock Forest Dungeon"))
-    world.set_rule(desert_entrance, Has("Unlock Desert Dungeon"))
-    world.set_rule(tech_entrance, Has("Unlock Tech Dungeon"))
     world.set_rule(unknown_entrance, HasAll("Golem Key", "Forest Key", "Desert Key", "Tech Key"))
 
 def set_all_location_rules(world: MoonlighterWorld) -> None:
