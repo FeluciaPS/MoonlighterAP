@@ -9,14 +9,15 @@ class MoonlighterOptions(PerGameCommonOptions):
     # Goal Options
     goal: Goal
 
+    # Game Options
+    progressive_floors: ProgressiveFloors
+
     # Other Options
     death_link: DeathLink
-    progressive_floors: ProgressiveFloors
 
     '''
     Some option plans so I don't forget them:
     - start_with_dungeon - If disabled, only town checks will be available at the start
-    - randomize_dungeon_floors - Splits dungeon unlocks into (progressive) floor unlocks
     - progressive_dungeons - Unlocks dungeons in order instead of randomly
     '''
 
@@ -27,7 +28,11 @@ option_groups = [
         [Goal],
     ),
     OptionGroup(
+        "Game Options"
+        [ProgressiveFloors]
+    ),
+    OptionGroup(
         "Other Randomizer Options",
-        [DeathLink, ProgressiveFloors],
+        [DeathLink],
     ),
 ]
