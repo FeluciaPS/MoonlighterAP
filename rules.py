@@ -24,8 +24,8 @@ def set_all_entrance_rules(world: MoonlighterWorld) -> None:
         for floor in range(3):
             dungeon_floor = world.get_entrance(f"{dungeon} Dungeon {numerals[floor]}")
             world.set_rule(dungeon_floor, Has(f"Unlock {dungeon} Dungeon") | Has(f"Progressive {dungeon} Floor", floor + 1))
-            unknown_entrance = world.get_entrance("Unknown Dungeon")
-            world.set_rule(unknown_entrance, HasAll("Golem Key", "Forest Key", "Desert Key", "Tech Key"))
+    unknown_entrance = world.get_entrance("Unknown Dungeon")
+    world.set_rule(unknown_entrance, HasAll("Golem Key", "Forest Key", "Desert Key", "Tech Key"))
 
 def set_all_location_rules(world: MoonlighterWorld) -> None:
     pass
