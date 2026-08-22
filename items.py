@@ -55,7 +55,7 @@ def create_item_object(world: MoonlighterWorld, name: str):
 def create_all_items(world: MoonlighterWorld) -> None:
     itempool: list[Item] = []
     for dungeon in DUNGEON_NAMES:
-        if world.options.progressive_floors:
+        if world.options.progressive_dungeon_floors:
             itempool += [world.create_item(f"Progressive {dungeon} Floor") for _ in range(3)]
         else:
             itempool += [world.create_item(f"Unlock {dungeon} Dungeon")]

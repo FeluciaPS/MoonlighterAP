@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 from rule_builder.options import OptionFilter
 from rule_builder.rules import Has, HasAll, Rule, True_
 
-from .option_groups import Goal, ProgressiveFloors
+from .option_groups import Goal
 
 from .data import DUNGEON_NAMES
 

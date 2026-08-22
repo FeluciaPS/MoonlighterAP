@@ -10,7 +10,7 @@ class MoonlighterOptions(PerGameCommonOptions):
     goal: Goal
 
     # Game Options
-    progressive_floors: ProgressiveFloors
+    progressive_dungeon_floors: ProgressiveDungeonFloors
 
     # Other Options
     death_link: DeathLink
@@ -28,8 +28,8 @@ option_groups = [
         [Goal],
     ),
     OptionGroup(
-        "Game Options"
-        [ProgressiveFloors]
+        "Game Options",
+        [ProgressiveDungeonFloors],
     ),
     OptionGroup(
         "Other Randomizer Options",
