@@ -26,6 +26,13 @@ class MoonlighterWorld(World):
     # Make UT generate without yaml
     ut_can_gen_without_yaml = True
 
+    # World properties
+    dungeon_order = ["Golem", "Forest", "Desert", "Tech"]
+
+    def generate_early(self) -> None:
+        # Shuffle and store the dungeon order, this will be used for combat logic later
+        if not(self.options.progressive_dungeons):
+            self.random.shuffle(self.dungeon_order)
 
     # TODO: this shouldn't end up in v1.0 but is a good catch during development
     def pre_fill(self) -> None:
@@ -39,9 +46,6 @@ class MoonlighterWorld(World):
             raise Exception(f"There are unreachable locations, please let Felucia know: {unreachable_locations}")
         if not len(self.multiworld.itempool):
             raise OptionError("There aren't any items in the item pool. Let Felucia know this is a bug.")
-
-    def generate_early(self) -> None:
-        pass
 
     def create_regions(self) -> None:
         regions.create_and_connect_regions(self)
@@ -64,6 +68,9 @@ class MoonlighterWorld(World):
     
     def fill_slot_data(self) -> Mapping[str, Any]:
         slot_data = dict()
+
+        # Pass the dungeon order into the mod
+        slot_data["dungeon_order"] = self.dungeon_order
 
         # Pass options into slot data for the mod to use
         slot_data["options"] = self.options.as_dict(
