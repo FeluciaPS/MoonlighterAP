@@ -3,11 +3,11 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from rule_builder.options import OptionFilter
-from rule_builder.rules import Has, HasAll, Rule, True_
+from rule_builder.rules import Has, HasAll, HasAny, HasAnyCount, Rule, True_
 
 from .option_groups import Goal
 
-from .data import DUNGEON_NAMES
+from .data import DUNGEON_NAMES, equipment
 
 if TYPE_CHECKING:
     from .world import MoonlighterWorld
@@ -17,15 +17,50 @@ def set_all_rules(world: MoonlighterWorld) -> None:
     set_all_location_rules(world)
     set_completion_condition(world)
 
+def has_dungeon_entrance(dungeon: str, floor: int):
+    if dungeon == "Unknown":
+        return HasAll("Golem Key", "Forest Key", "Desert Key", "Tech Key")
+
+    return Has(f"Unlock {dungeon} Dungeon") | Has(f"Progressive {dungeon} Floor", floor)
+
+
+def can_enter_dungeon(world: MoonlighterWorld, dungeon: str, floor: int = 3) -> Rule:
+    key_rule = has_dungeon_entrance(dungeon, floor)
+    tier = world.dungeon_order.index(dungeon)
+    required_level = tier if floor < 3 else tier + 1
+
+    # Hardcoding this seems easiest
+    if dungeon == "Unknown":
+        required_level = 4
+
+    if required_level == 0:
+        # You should always have one of the base weapons, but I think a rule is still appropriate
+        return key_rule & HasAny([f"Training {weapon}" for weapon in equipment.WEAPON_TYPES] + ["Broom Spear"])
+
+    required_items = {}
+
+    for key, value in equipment.PROGESSIVE_EQUIPMENT_ITEM_NAMES.items():
+        required_items[key] = {}
+        for item in value:
+            required_items[key][item] = required_level
+
+    equipment_rule = True_()
+
+    for key, value in equipment.PROGESSIVE_EQUIPMENT_ITEM_NAMES.items():
+        equipment_rule &= HasAnyCount(value)
+
+    return key_rule & equipment_rule
 
 def set_all_entrance_rules(world: MoonlighterWorld) -> None:
     numerals = ["I", "II", "III"]
     for dungeon in DUNGEON_NAMES:
         for floor in range(3):
             dungeon_floor = world.get_entrance(f"{dungeon} Dungeon {numerals[floor]}")
-            world.set_rule(dungeon_floor, Has(f"Unlock {dungeon} Dungeon") | Has(f"Progressive {dungeon} Floor", floor + 1))
+            rule = can_enter_dungeon(world, dungeon, floor + 1)
+            world.set_rule(dungeon_floor, rule)
+
     unknown_entrance = world.get_entrance("Unknown Dungeon")
-    world.set_rule(unknown_entrance, HasAll("Golem Key", "Forest Key", "Desert Key", "Tech Key"))
+    world.set_rule(unknown_entrance, can_enter_dungeon(world, "Unknown"))
 
 def set_all_location_rules(world: MoonlighterWorld) -> None:
     pass
