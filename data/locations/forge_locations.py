@@ -18,7 +18,7 @@ INTERNAL_LOCATION_IDS = {
     "Training Gloves": 13,
     "Training Bow": 14,
     
-    "Soldier Sword and Shield": 15,
+    "Soldier Short Sword": 15,
     "Rusty Short Sword": 16,
     "Buster Big Sword": 17,
     "Rock Big Sword": 18,
