@@ -11,12 +11,13 @@ INTERNAL_LOCATION_IDS = {
     "Steel Chestplate": 8,
     "Steel Boots": 9,
     
-    # Golem
+    # Training and Golem
     "Training Short Sword": 10,
     "Training Big Sword": 11,
     "Training Spear": 12,
     "Training Gloves": 13,
     "Training Bow": 14,
+    
     "Soldier Sword and Shield": 15,
     "Rusty Short Sword": 16,
     "Buster Big Sword": 17,
@@ -64,6 +65,9 @@ INTERNAL_LOCATION_IDS = {
     "Exeter Bow": 53,
     "Lightning Bow": 54,
 }
+
+# Used in locations.py to create checks
+forge_location_groups: list[tuple[int, int]] = [(601, 624), (625, 635), (635, 644), (645, 654)]
 
 LOCATION_IDS = {}
 
