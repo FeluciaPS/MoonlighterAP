@@ -2,6 +2,8 @@ from collections.abc import Mapping
 from typing import Any
 from Options import OptionError
 from worlds.AutoWorld import World
+
+from .data import equipment
 from .option_groups import EquipmentRandomizer, Goal
 
 from . import items, locations, options, regions, rules, web_world
@@ -39,9 +41,6 @@ class MoonlighterWorld(World):
     # Mostly option validation goes on here
     def generate_early(self) -> None:
         # Unimplemented options
-        if self.options.broom_only:
-            self.raise_unimplemented_option("Broom Only", "True")
-
         if self.options.equipment_randomizer != EquipmentRandomizer.option_progressive:
             self.raise_unimplemented_option("Equipment Randomizer", "Progressive", True)
 
@@ -51,6 +50,17 @@ class MoonlighterWorld(World):
         # Shuffle and store the dungeon order, this will be used for combat logic later
         if not(self.options.progressive_dungeons):
             self.random.shuffle(self.dungeon_order)
+
+        # Fill equipment list
+        if "_allweapons" in self.options.included_equipment:
+            self.options.included_equipment.value.update(equipment.WEAPON_TYPES)
+
+        if "_allarmor" in self.options.included_equipment:
+            self.options.included_equipment.value.update(equipment.ARMOR_TYPES)
+
+        # Clear equipment list if broom only
+        if self.options.broom_only:
+            self.options.included_equipment.value = set()
 
     # TODO: this shouldn't end up in v1.0 but is a good catch during development
     def pre_fill(self) -> None:

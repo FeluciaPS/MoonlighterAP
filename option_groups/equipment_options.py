@@ -29,14 +29,14 @@ class IncludedEquipment(OptionSet):
     valid_keys = [
         "_allweapons",
         "_allarmor",
-        "Cloth Armor",
-        "Iron Armor",
-        "Steel Armor",
-        "Short Swords",
-        "Big Swords",
-        "Spears",
+        "Fabric",
+        "Iron",
+        "Steel",
+        "Short Sword",
+        "Big Sword",
+        "Spear",
         "Gloves",
-        "Bows"
+        "Bow"
     ]
 
     default = [key for key in valid_keys.copy() if not key.startswith("_")]
