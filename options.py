@@ -11,6 +11,7 @@ class MoonlighterOptions(PerGameCommonOptions):
 
     # Game Options
     progressive_dungeon_floors: ProgressiveDungeonFloors
+    progressive_dungeons: ProgressiveDungeons
 
     # Item Options
     equipment_randomizer: EquipmentRandomizer
