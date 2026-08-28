@@ -38,8 +38,9 @@ def create_all_locations(world: MoonlighterWorld) -> None:
 
 
 def create_regular_locations(world: MoonlighterWorld) -> None:
-    # Used to track which group of forge items will be used
+    # Used to track which group of forge and hawker items will be used
     forge_counter: int = 0
+    hawker_counter: int = 4
     
     # Town locations
     town = world.get_region("Town")
@@ -68,15 +69,16 @@ def create_regular_locations(world: MoonlighterWorld) -> None:
         # Hawker locations
         hawker_locations_preboss = get_location_names_with_ids([
             location for location, value in hawker_locations.LOCATION_IDS.items()
-            if value % 4 != 0
+            if value % 4 != 0 and value <= hawker_counter < value + 4
         ])
             
         hawker_locations_postboss = get_location_names_with_ids([
             location for location, value in hawker_locations.LOCATION_IDS.items()
-            if value % 4 == 0
+            if value == hawker_counter
         ])
         region_1.add_locations(hawker_locations_preboss, MoonlighterLocation)
         region_3.add_locations(hawker_locations_postboss, MoonlighterLocation)
+        hawker_counter += 4
         
         
         # Forge locations
