@@ -44,7 +44,7 @@ class MoonlighterWorld(World):
         if self.options.equipment_randomizer != EquipmentRandomizer.option_progressive:
             self.raise_unimplemented_option("Equipment Randomizer", "Progressive", True)
 
-        if self.options.goal == Goal.collector:
+        if self.options.goal == Goal.option_collector:
             self.raise_unimplemented_option("Goal", "Collector")
 
         # Shuffle and store the dungeon order, this will be used for combat logic later
