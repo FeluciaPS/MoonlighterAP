@@ -35,7 +35,6 @@ def can_enter_dungeon(world: MoonlighterWorld, dungeon: str, floor: int = 3) -> 
 
     if required_level == 0:
         # You should always have one of the base weapons, but I think a rule is still appropriate
-        print(equipment.STARTING_WEAPON_NAMES)
         return key_rule & HasAny(*equipment.STARTING_WEAPON_NAMES)
 
     required_items = {}
