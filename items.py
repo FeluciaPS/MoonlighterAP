@@ -55,7 +55,7 @@ def create_item_object(world: MoonlighterWorld, name: str):
         if category.startswith("_"):
             continue
 
-        if world.options.equipment_randomizer == EquipmentRandomizer.progressive:
+        if world.options.equipment_randomizer == EquipmentRandomizer.option_progressive:
             if name in equipment.PROGRESSIVE_EQUIPMENT_ITEM_NAMES[category]:
                 classification = ItemClassification.progression
                 break # Early exit for a minimal performance gain
