@@ -50,9 +50,8 @@ def create_regular_locations(world: MoonlighterWorld) -> None:
 
 
     # Dungeon locations
-    for dungeon_index, dungeon in enumerate(DUNGEON_NAMES):
+    for dungeon in DUNGEON_NAMES:
         region_1 = world.get_region(f"{dungeon} Dungeon I")
-        region_2 = world.get_region(f"{dungeon} Dungeon II")
         region_3 = world.get_region(f"{dungeon} Dungeon III")
 
         # Carl notes
@@ -83,20 +82,14 @@ def create_regular_locations(world: MoonlighterWorld) -> None:
         
         
         # Forge locations
-        # Every weapon except the training weapons require floor 2 items to craft
-        forge_group_start, forge_group_end = forge_locations.forge_location_groups[dungeon]
-
+        # I wanted to stay within the dungeon for loop because region_1 was already defined
+        forge_group_start, forge_group_end = forge_locations.forge_location_groups[forge_counter]
         forge_group_locations = get_location_names_with_ids([
-            location_name for location_name, location_id in forge_locations.WEAPON_FORGE_LOCATION_IDS.items()
-                if forge_group_start <= location_id <= forge_group_end
+            location_name for location_name, location_id in forge_locations.LOCATION_IDS.items()
+            if forge_group_start <= location_id <= forge_group_end
         ])
-
-        region_2.add_locations(forge_group_locations, MoonlighterLocation)
-
-    # Training weapons only require Golem Dungeon I access
-    golem_region = world.get_region(f"Golem Dungeon I")
-    training_locations = get_location_names_with_ids([*forge_locations.TRAINING_FORGE_LOCATION_IDS])
-    golem_region.add_locations(training_locations, MoonlighterLocation)
+        region_1.add_locations(forge_group_locations, MoonlighterLocation)
+        forge_counter += 1
 
 
 def create_events(world: MoonlighterWorld) -> None:

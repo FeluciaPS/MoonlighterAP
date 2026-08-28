@@ -109,41 +109,18 @@ WEAPON_TYPES = [
     "Bow"
 ]
 
-STARTING_WEAPON_NAMES = [f"Training {weapon}" for weapon in WEAPON_TYPES] + ["Broom Spear"]
-
 ARMOR_TYPES = [
     "Fabric",
     "Iron",
     "Steel"
 ]
 
-ARMOR_SLOTS = [
-    "Helmet",
-    "Chestplate",
-    "Boots"
+PROGRESSIVE_WEAPON_ITEM_NAMES = [
+    f"Progressive {path} {type}" 
+        # I'm open to better names than "Power" but elemental is good
+        for path in ["Power", "Elemental"]
+        for type in WEAPON_TYPES
 ]
-
-PROGRESSIVE_WEAPON_ITEM_DICT = {}
-PROGRESSIVE_ARMOR_ITEM_DICT = {}
-
-for type in WEAPON_TYPES:
-    PROGRESSIVE_WEAPON_ITEM_DICT[type] = [
-        f"Progressive {path} {type}" 
-            # I'm open to better names than "Power" but elemental is good
-            for path in ["Power", "Elemental"]
-    ]
-
-for type in ARMOR_TYPES:
-    PROGRESSIVE_ARMOR_ITEM_DICT[type] = [
-        f"Progressive {type} {"Bandana" if type == "Fabric" and slot == "Helmet" else slot}"
-            for slot in ARMOR_SLOTS
-    ]
-
-for slot in ARMOR_SLOTS:
-    PROGRESSIVE_ARMOR_ITEM_DICT[slot] = [
-        f"Progressive {type} {"Bandana" if type == "Fabric" and slot == "Helmet" else slot}"
-            for type in ARMOR_TYPES
-    ]
 
 PROGRESSIVE_HELMET_ITEM_NAMES = [
     f"Progressive {type} {"Bandana" if type == "Fabric" else "Helmet"}"
@@ -160,7 +137,9 @@ PROGRESSIVE_BOOTS_ITEM_NAMES = [
         for type in ARMOR_TYPES
 ]
 
-PROGRESSIVE_EQUIPMENT_ITEM_NAMES = {
-    **PROGRESSIVE_WEAPON_ITEM_DICT,
-    **PROGRESSIVE_ARMOR_ITEM_DICT,
+PROGESSIVE_EQUIPMENT_ITEM_NAMES = {
+    "weapon": PROGRESSIVE_WEAPON_ITEM_NAMES,
+    "helmet": PROGRESSIVE_HELMET_ITEM_NAMES,
+    "chestplate": PROGRESSIVE_CHESTPLATE_ITEM_NAMES,
+    "boots": PROGRESSIVE_BOOTS_ITEM_NAMES
 }

@@ -11,12 +11,6 @@ class MoonlighterOptions(PerGameCommonOptions):
 
     # Game Options
     progressive_dungeon_floors: ProgressiveDungeonFloors
-    progressive_dungeons: ProgressiveDungeons
-
-    # Item Options
-    equipment_randomizer: EquipmentRandomizer
-    included_equipment: IncludedEquipment
-    broom_only: BroomOnly
 
     # Other Options
     death_link: DeathLink
@@ -36,10 +30,6 @@ option_groups = [
     OptionGroup(
         "Game Options",
         [ProgressiveDungeonFloors],
-    ),
-    OptionGroup(
-        "Equipment Options",
-        [EquipmentRandomizer, IncludedEquipment, BroomOnly]
     ),
     OptionGroup(
         "Other Randomizer Options",

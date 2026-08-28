@@ -26,7 +26,7 @@ def has_dungeon_entrance(dungeon: str, floor: int):
 
 def can_enter_dungeon(world: MoonlighterWorld, dungeon: str, floor: int = 3) -> Rule:
     key_rule = has_dungeon_entrance(dungeon, floor)
-    tier = world.dungeon_order.index(dungeon) if dungeon != "Unknown" else -1
+    tier = world.dungeon_order.index(dungeon)
     required_level = tier if floor < 3 else tier + 1
 
     # Hardcoding this seems easiest
@@ -35,18 +35,18 @@ def can_enter_dungeon(world: MoonlighterWorld, dungeon: str, floor: int = 3) -> 
 
     if required_level == 0:
         # You should always have one of the base weapons, but I think a rule is still appropriate
-        return key_rule & HasAny(*equipment.STARTING_WEAPON_NAMES)
+        return key_rule & HasAny([f"Training {weapon}" for weapon in equipment.WEAPON_TYPES] + ["Broom Spear"])
 
     required_items = {}
 
-    for key, value in equipment.PROGRESSIVE_EQUIPMENT_ITEM_NAMES.items():
+    for key, value in equipment.PROGESSIVE_EQUIPMENT_ITEM_NAMES.items():
         required_items[key] = {}
         for item in value:
             required_items[key][item] = required_level
 
     equipment_rule = True_()
 
-    for key, value in required_items.items():
+    for key, value in equipment.PROGESSIVE_EQUIPMENT_ITEM_NAMES.items():
         equipment_rule &= HasAnyCount(value)
 
     return key_rule & equipment_rule
