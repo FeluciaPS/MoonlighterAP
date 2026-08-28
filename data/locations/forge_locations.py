@@ -1,23 +1,16 @@
-INTERNAL_LOCATION_IDS = {
-    # Doesn't account for upgrading, which imo is a good thing
-    # Armour
-    "Fabric Bandana": 1,
-    "Fabric Chestplate": 2,
-    "Fabric Boots": 3,
-    "Iron Helmet": 4,
-    "Iron Chestplate": 5,
-    "Iron Boots": 6,
-    "Steel Helmet": 7,
-    "Steel Chestplate": 8,
-    "Steel Boots": 9,
-    
-    # Training and Golem
+from ..items import equipment
+
+TRAINING_FORGE_LOCATION_IDS = {
     "Training Short Sword": 10,
     "Training Big Sword": 11,
     "Training Spear": 12,
     "Training Gloves": 13,
     "Training Bow": 14,
-    
+}
+
+WEAPON_FORGE_LOCATION_IDS = {
+    # Golem
+
     "Soldier Short Sword": 15,
     "Rusty Short Sword": 16,
     "Buster Big Sword": 17,
@@ -66,8 +59,25 @@ INTERNAL_LOCATION_IDS = {
     "Lightning Bow": 54,
 }
 
+# For the time being we need to consider upgrades for armour locations because
+# otherwise there aren't enough locations in the pool to fit everything.
+ARMOR_FORGE_LOCATION_IDS = {}
+for index, name in enumerate(equipment.ARMOR_ITEM_NAMES):
+    ARMOR_FORGE_LOCATION_IDS[f"{name}"] = index + 55
+
+INTERNAL_LOCATION_IDS = {
+    **ARMOR_FORGE_LOCATION_IDS,
+    **TRAINING_FORGE_LOCATION_IDS,
+    **WEAPON_FORGE_LOCATION_IDS
+}
+
 # Used in locations.py to create checks
-forge_location_groups: list[tuple[int, int]] = [(601, 624), (625, 635), (635, 644), (645, 654)]
+forge_location_groups = {
+    "Golem": (15, 24),
+    "Forest": (25, 34),
+    "Desert": (35, 44),
+    "Tech": (45, 54),
+}
 
 LOCATION_IDS = {}
 
