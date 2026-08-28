@@ -24,5 +24,13 @@ INTERNAL_LOCATION_IDS = {
 
 LOCATION_IDS = {}
 
+# Used in locations.py to create checks
+hawker_location_groups = {
+    "Golem": (1, 4),
+    "Forest": (5, 8),
+    "Desert": (9, 12),
+    "Tech": (13, 16),
+}
+
 for key, value in INTERNAL_LOCATION_IDS.items():
     LOCATION_IDS[key] = int(value) + 500
