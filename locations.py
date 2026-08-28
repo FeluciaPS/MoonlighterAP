@@ -45,11 +45,6 @@ def create_regular_locations(world: MoonlighterWorld) -> None:
     town.add_locations(town_locations, MoonlighterLocation)
 
 
-    # Training weapons only require 
-    golem_region = world.get_region(f"Golem Dungeon I")
-    training_locations = get_location_names_with_ids([*forge_locations.TRAINING_FORGE_LOCATION_IDS])
-    golem_region.add_locations(training_locations, MoonlighterLocation)
-
     # Dungeon locations
     for dungeon_index, dungeon in enumerate(DUNGEON_NAMES):
         region_1 = world.get_region(f"{dungeon} Dungeon I")
@@ -100,6 +95,11 @@ def create_regular_locations(world: MoonlighterWorld) -> None:
         ])
 
         region_2.add_locations(forge_group_locations, MoonlighterLocation)
+
+    # Training weapons only require Golem Dungeon I access
+    golem_region = world.get_region(f"Golem Dungeon I")
+    training_locations = get_location_names_with_ids([*forge_locations.TRAINING_FORGE_LOCATION_IDS])
+    golem_region.add_locations(training_locations, MoonlighterLocation)
 
 
 def create_events(world: MoonlighterWorld) -> None:
