@@ -38,9 +38,6 @@ def create_all_locations(world: MoonlighterWorld) -> None:
 
 
 def create_regular_locations(world: MoonlighterWorld) -> None:
-    # Used to track which group of forge items will be used
-    forge_counter: int = 0
-    
     # Town locations
     town = world.get_region("Town")
 
@@ -48,9 +45,15 @@ def create_regular_locations(world: MoonlighterWorld) -> None:
     town.add_locations(town_locations, MoonlighterLocation)
 
 
+    # Training weapons only require 
+    golem_region = world.get_region(f"Golem Dungeon I")
+    training_locations = get_location_names_with_ids([*forge_locations.TRAINING_FORGE_LOCATION_IDS])
+    golem_region.add_locations(training_locations, MoonlighterLocation)
+
     # Dungeon locations
-    for dungeon in DUNGEON_NAMES:
+    for dungeon_index, dungeon in enumerate(DUNGEON_NAMES):
         region_1 = world.get_region(f"{dungeon} Dungeon I")
+        region_2 = world.get_region(f"{dungeon} Dungeon II")
         region_3 = world.get_region(f"{dungeon} Dungeon III")
 
         # Carl notes
@@ -77,17 +80,26 @@ def create_regular_locations(world: MoonlighterWorld) -> None:
         ])
         region_1.add_locations(hawker_locations_preboss, MoonlighterLocation)
         region_3.add_locations(hawker_locations_postboss, MoonlighterLocation)
-        
+
+        # Forge armour locations
+        # Crafting armour in the forge only requires items found on floor 1 of every dungeon
+        forge_armor_locations = get_location_names_with_ids([
+            location_name for location_name, location_id in forge_locations.ARMOR_FORGE_LOCATION_IDS.items()
+                if (location_id - 56 - dungeon_index) % 4 == 0
+        ])
+
+        region_1.add_locations(forge_armor_locations)
         
         # Forge locations
-        # I wanted to stay within the dungeon for loop because region_1 was already defined
-        forge_group_start, forge_group_end = forge_locations.forge_location_groups[forge_counter]
+        # Every weapon except the training weapons require floor 2 items to craft
+        forge_group_start, forge_group_end = forge_locations.forge_location_groups[dungeon]
+
         forge_group_locations = get_location_names_with_ids([
-            location_name for location_name, location_id in forge_locations.LOCATION_IDS.items()
-            if forge_group_start <= location_id <= forge_group_end
+            location_name for location_name, location_id in forge_locations.WEAPON_FORGE_LOCATION_IDS.items()
+                if forge_group_start <= location_id <= forge_group_end
         ])
-        region_1.add_locations(forge_group_locations, MoonlighterLocation)
-        forge_counter += 1
+
+        region_2.add_locations(forge_group_locations, MoonlighterLocation)
 
 
 def create_events(world: MoonlighterWorld) -> None:
