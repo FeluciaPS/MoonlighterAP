@@ -83,7 +83,7 @@ def create_regular_locations(world: MoonlighterWorld) -> None:
         # Crafting armour in the forge only requires items found on floor 1 of every dungeon
         forge_armor_locations = get_location_names_with_ids([
             location_name for location_name, location_id in forge_locations.ARMOR_FORGE_LOCATION_IDS.items()
-                if (location_id - 56 - dungeon_index) % 4 == 0
+                if (location_id - 55 - dungeon_index) % 4 == 0
         ])
 
         region_1.add_locations(forge_armor_locations)
