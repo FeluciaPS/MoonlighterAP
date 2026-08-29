@@ -89,6 +89,7 @@ def create_all_items(world: MoonlighterWorld) -> None:
             itempool += [
                 world.create_item(item_name)
                     for item_name in equipment.PROGRESSIVE_EQUIPMENT_ITEM_NAMES[category]
+                    for _ in range(4)
             ]
 
     # Compare item pool size to location size, and fill what's left with
