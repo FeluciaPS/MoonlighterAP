@@ -64,15 +64,18 @@ def create_regular_locations(world: MoonlighterWorld) -> None:
 
 
         # Hawker locations
+        hawker_group_start, hawker_group_end = hawker_locations.hawker_location_groups[dungeon]
+
         hawker_locations_preboss = get_location_names_with_ids([
             location for location, value in hawker_locations.LOCATION_IDS.items()
-            if value % 4 != 0
+            if hawker_group_start <= value < hawker_group_end & value % 4 != 0
         ])
             
         hawker_locations_postboss = get_location_names_with_ids([
             location for location, value in hawker_locations.LOCATION_IDS.items()
-            if value % 4 == 0
+            if hawker_group_start <= value < hawker_group_end & value % 4 == 0
         ])
+         
         region_1.add_locations(hawker_locations_preboss, MoonlighterLocation)
         region_3.add_locations(hawker_locations_postboss, MoonlighterLocation)
 
