@@ -55,11 +55,11 @@ def set_all_entrance_rules(world: MoonlighterWorld) -> None:
     numerals = ["I", "II", "III"]
     for dungeon in DUNGEON_NAMES:
         for floor in range(3):
-            dungeon_floor = world.get_entrance(f"{dungeon} Dungeon {numerals[floor]}")
+            dungeon_floor = world.get_entrance(f"{dungeon} Dungeon {numerals[floor]} Entrance")
             rule = can_enter_dungeon(world, dungeon, floor + 1)
             world.set_rule(dungeon_floor, rule)
 
-    unknown_entrance = world.get_entrance("Unknown Dungeon")
+    unknown_entrance = world.get_entrance("Unknown Dungeon Entrance")
     world.set_rule(unknown_entrance, can_enter_dungeon(world, "Unknown"))
 
 def set_all_location_rules(world: MoonlighterWorld) -> None:

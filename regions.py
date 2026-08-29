@@ -51,13 +51,13 @@ def connect_regions(world: MoonlighterWorld):
         region_2 = world.get_region(f'{dungeon} Dungeon II')
         region_3 = world.get_region(f'{dungeon} Dungeon III')
 
-        town.connect(region_1, f'{dungeon} Dungeon I')
-        region_1.connect(region_2, f'{dungeon} Dungeon II')
-        region_2.connect(region_3, f'{dungeon} Dungeon III')
+        town.connect(region_1, f'{dungeon} Dungeon I Entrance')
+        region_1.connect(region_2, f'{dungeon} Dungeon II Entrance')
+        region_2.connect(region_3, f'{dungeon} Dungeon III Entrance')
 
     for name in SHOP_NAMES:
         region = world.get_region(name)
-        town.connect(region, name)
+        town.connect(region, f"{name} Entrance")
 
     unknown_dungeon = world.get_region("Unknown Dungeon")
-    town.connect(unknown_dungeon, "Unknown Dungeon")
+    town.connect(unknown_dungeon, "Unknown Dungeon Entrance")
