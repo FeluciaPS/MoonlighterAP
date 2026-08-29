@@ -10,24 +10,7 @@ from .data import DUNGEON_NAMES
 if TYPE_CHECKING:
     from .world import MoonlighterWorld
 
-ITEM_NAME_TO_ID = {
-    "Unlock Golem Dungeon": 1,
-    "Unlock Forest Dungeon": 2,
-    "Unlock Desert Dungeon": 3,
-    "Unlock Tech Dungeon": 4,
-
-    "Progressive Golem Floor": 5,
-    "Progressive Forest Floor": 6,
-    "Progressive Desert Floor": 7,
-    "Progressive Tech Floor": 8,
-
-    "Golem Key": 9,
-    "Forest Key": 10,
-    "Desert Key": 11,
-    "Tech Key": 12,
-
-    "Filler Item": 1000,
-}
+ITEM_NAME_TO_ID = item_names.ITEM_IDS
 
 class MoonlighterItem(Item):
     game = "Moonlighter"
@@ -44,7 +27,7 @@ def create_item_object(world: MoonlighterWorld, name: str):
     classification = ItemClassification.useful
 
     # Progression items are progression items
-    if name in item_names.PROGRESSION_ITEMS:
+    if name in item_names.DUNGEON_ITEMS:
         classification = ItemClassification.progression
 
     if name in item_names.FILLER_ITEMS:
@@ -61,6 +44,9 @@ def create_item_object(world: MoonlighterWorld, name: str):
                 break # Early exit for a minimal performance gain
         else:
             break # other options are unimplemented so just exit
+
+    if name in equipment.STARTING_WEAPON_NAMES:
+        classification = ItemClassification.progression
 
     return MoonlighterItem(name, classification, ITEM_NAME_TO_ID[name], world.player)
 
@@ -81,7 +67,7 @@ def create_all_items(world: MoonlighterWorld) -> None:
     starting_weapon = "Broom Spear" if world.options.broom_only else world.random.choice(equipment.STARTING_WEAPON_NAMES)
     world.push_precollected(world.create_item(starting_weapon))
 
-    if world.options.equipment_randomizer == EquipmentRandomizer.progressive:
+    if world.options.equipment_randomizer == EquipmentRandomizer.option_progressive:
         for category in world.options.included_equipment.value:
             if category.startswith("_"):
                 continue
