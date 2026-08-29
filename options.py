@@ -35,7 +35,7 @@ option_groups = [
     ),
     OptionGroup(
         "Game Options",
-        [ProgressiveDungeonFloors],
+        [ProgressiveDungeonFloors, ProgressiveDungeons],
     ),
     OptionGroup(
         "Equipment Options",
