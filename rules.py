@@ -37,9 +37,21 @@ def can_enter_dungeon(world: MoonlighterWorld, dungeon: str, floor: int = 3) -> 
         # You should always have one of the base weapons, but I think a rule is still appropriate
         return key_rule & HasAny(*equipment.STARTING_WEAPON_NAMES)
 
-    required_items = {}
+    required_items = {
+        "weapon": {}
+    }
 
-    for key, value in equipment.PROGRESSIVE_EQUIPMENT_ITEM_NAMES.items():
+    for value in equipment.PROGRESSIVE_WEAPON_ITEM_DICT.values():
+        for item in value:
+            required_items["weapon"][item] = required_level
+
+    armor_items = {
+        "helmet": equipment.PROGRESSIVE_HELMET_ITEM_NAMES,
+        "chestplate": equipment.PROGRESSIVE_CHESTPLATE_ITEM_NAMES,
+        "boots": equipment.PROGRESSIVE_BOOTS_ITEM_NAMES
+    }
+
+    for key, value in armor_items.items():
         required_items[key] = {}
         for item in value:
             required_items[key][item] = required_level
