@@ -40,10 +40,12 @@ def can_enter_dungeon(world: MoonlighterWorld, dungeon: str, floor: int = 3) -> 
     required_items = {
         "weapon": {}
     }
-
-    for value in equipment.PROGRESSIVE_WEAPON_ITEM_DICT.values():
-        for item in value:
-            required_items["weapon"][item] = required_level
+    if world.options.broom_only: 
+        required_items["weapon"]["Broom Spear"] = 1
+    else:
+        for value in equipment.PROGRESSIVE_WEAPON_ITEM_DICT.values():
+            for item in value:
+                required_items["weapon"][item] = required_level
 
     armor_items = {
         "helmet": equipment.PROGRESSIVE_HELMET_ITEM_NAMES,

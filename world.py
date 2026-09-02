@@ -58,9 +58,9 @@ class MoonlighterWorld(World):
         if "_allarmor" in self.options.included_equipment:
             self.options.included_equipment.value.update(equipment.ARMOR_TYPES)
 
-        # Clear equipment list if broom only
+        # Clear weapons from equipment list if broom only
         if self.options.broom_only:
-            self.options.included_equipment.value = set()
+            self.options.included_equipment.value &= set(equipment.ARMOR_TYPES)
 
     # TODO: this shouldn't end up in v1.0 but is a good catch during development
     def pre_fill(self) -> None:
