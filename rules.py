@@ -40,6 +40,7 @@ def can_enter_dungeon(world: MoonlighterWorld, dungeon: str, floor: int = 3) -> 
     required_items = {
         "weapon": {}
     }
+    
     if world.options.broom_only: 
         required_items["weapon"]["Broom Spear"] = 1
     else:
