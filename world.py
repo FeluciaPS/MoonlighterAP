@@ -71,9 +71,11 @@ class MoonlighterWorld(World):
             if category.startswith("_"):
                 continue
 
-            self.filler_equipment += [item_name 
-            for item_name in equipment.PROGRESSIVE_EQUIPMENT_ITEM_NAMES[category]
-            for _ in range (4)]  
+            self.filler_equipment += [
+                item_name 
+                    for item_name in equipment.PROGRESSIVE_EQUIPMENT_ITEM_NAMES[category]
+                    for _ in range (4)
+            ]  
 
     # TODO: this shouldn't end up in v1.0 but is a good catch during development
     def pre_fill(self) -> None:
