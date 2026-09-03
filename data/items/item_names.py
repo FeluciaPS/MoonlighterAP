@@ -21,6 +21,13 @@ FILLER_ITEMS = [
     "Filler Item"
 ]
 
+TRAP_ITEMS = [
+    "Demand Trap",
+    "Enemy Trap",
+    "Thief Trap",
+]
+# Traps are unimplemented so these are just dummy traps for now.
+
 ITEM_IDS = {}
 
 n = 1
@@ -29,6 +36,10 @@ for name in DUNGEON_ITEMS:
     n += 1
 
 for name in FILLER_ITEMS:
+    ITEM_IDS[name] = n
+    n += 1
+
+for name in TRAP_ITEMS:
     ITEM_IDS[name] = n
     n += 1
 

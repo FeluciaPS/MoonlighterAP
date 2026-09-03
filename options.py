@@ -21,6 +21,11 @@ class MoonlighterOptions(PerGameCommonOptions):
     # Other Options
     death_link: DeathLink
 
+    # Trap Options
+    traps: Traps
+    trap_percentage: TrapPercentage
+    trap_weights: TrapWeights
+
     '''
     Some option plans so I don't forget them:
     - start_with_dungeon - If disabled, only town checks will be available at the start
@@ -44,5 +49,9 @@ option_groups = [
     OptionGroup(
         "Other Randomizer Options",
         [DeathLink],
+    ),
+    OptionGroup(
+        "Trap Options",
+        [Traps,TrapPercentage,TrapWeights],
     ),
 ]
