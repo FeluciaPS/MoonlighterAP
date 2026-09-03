@@ -39,7 +39,7 @@ option_groups = [
     ),
     OptionGroup(
         "Equipment Options",
-        [EquipmentRandomizer, IncludedEquipment, BroomOnly]
+        [EquipmentRandomizer, IncludedEquipment, BroomOnly],
     ),
     OptionGroup(
         "Other Randomizer Options",
