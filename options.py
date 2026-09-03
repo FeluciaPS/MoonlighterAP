@@ -52,6 +52,6 @@ option_groups = [
     ),
     OptionGroup(
         "Trap Options",
-        [Traps,TrapPercentage,TrapWeights],
+        [Traps, TrapPercentage, TrapWeights],
     ),
 ]
