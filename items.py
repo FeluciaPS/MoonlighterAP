@@ -6,6 +6,7 @@ from BaseClasses import Item, ItemClassification
 from .option_groups import EquipmentRandomizer
 from .data.items import item_names, equipment
 from .data import DUNGEON_NAMES
+from .traps import get_trap_names
 
 if TYPE_CHECKING:
     from .world import MoonlighterWorld
@@ -82,11 +83,16 @@ def create_all_items(world: MoonlighterWorld) -> None:
     # filler items.
     item_count = len(itempool)
     unfilled_location_count = len(world.multiworld.get_unfilled_locations(world.player))
-    filler_item_count = unfilled_location_count - item_count
+    trap_item_count = 0 if not world.options.traps else round((unfilled_location_count - item_count) * (world.options.trap_percentage / 100))
+    filler_item_count = unfilled_location_count - item_count - trap_item_count
     
     itempool += [
         world.create_filler() for _ in range(filler_item_count)
     ]
 
+    if world.options.traps:
+        itempool += [
+            world.create_item(trap) for trap in get_trap_names(trap_item_count, world)
+        ]
     # Append the item pool to the world's
     world.multiworld.itempool += itempool
