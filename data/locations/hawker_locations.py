@@ -1,25 +1,25 @@
 INTERNAL_LOCATION_IDS = {
     # Doesn't include the DLC as of yet
     # First 3 unlocked with dungeon access, 4th unlocked by defeating boss
-    "Golem Banner": 1,
-    "Golem Books": 2,
-    "Golem Fountain": 3,
-    "Golem Crystals": 4,
+    "Buy Golem Banner": 1,
+    "Buy Golem Books": 2,
+    "Buy Golem Fountain": 3,
+    "Buy Golem Crystals": 4,
     
-    "Forest Flowers": 5,
-    "Forest Ivy": 6,
-    "Fruit Bowl": 7,
-    "Carnivorous Mutae Miniature": 8,
+    "Buy Forest Flowers": 5,
+    "Buy Forest Ivy": 6,
+    "Buy Fruit Bowl": 7,
+    "Buy Carnivorous Mutae Miniature": 8,
     
-    "Desert Cloth": 9,
-    "Lava Clock": 10,
-    "Lava Fountain": 11,
-    "Naja Miniature": 12,
+    "Buy Desert Cloth": 9,
+    "Buy Lava Clock": 10,
+    "Buy Lava Fountain": 11,
+    "Buy Naja Miniature": 12,
     
-    "Electric Device": 13,
-    "Shock Valves": 14,
-    "Tech Shelf": 15,
-    "Energy Flux Miniature": 16
+    "Buy Electric Device": 13,
+    "Buy Shock Valves": 14,
+    "Buy Tech Shelf": 15,
+    "Buy Energy Flux Miniature": 16
 }
 
 LOCATION_IDS = {}
