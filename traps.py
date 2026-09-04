@@ -4,21 +4,37 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from .world import MoonlighterWorld
 
-from .data.items import item_names
+def get_trap_names(trap_item_count: int, world: MoonlighterWorld):
+    weights = world.options.trap_weights.value
+    total_weight = sum(weights.values())
 
-def get_trap_names (trap_item_count: int, world: MoonlighterWorld):
-    Weights = [[trap, world.options.trap_weights[trap] / 100] for trap in item_names.TRAP_ITEMS]
-    Totalweight = sum(Weight[1] for Weight in Weights)
-    trap_pool = []
-    for Weight in Weights:
-        if Weight[1] == 0: continue
-        Weight[1] = round((Weight[1] * trap_item_count) / Totalweight)
-        trap_pool += [Weight[0] for _ in range(Weight[1])]
-    roundingerror = trap_item_count - len(trap_pool)
-    while roundingerror > 0:
-        trap_pool += world.random.choice([(Weight[0] for _ in range(Weight[1])) for Weight in Weights])
-        roundingerror -= 1
-    while roundingerror < 0:
-        trap_pool.remove(world.random.choice(trap_pool))
-        roundingerror += 1
-    return trap_pool
+    # Create a perfectly weighted trap pool
+    perfect_distribution = {
+        trap: trap_item_count * (weight / total_weight) 
+            for trap, weight in weights.items()
+    }
+
+    # Fill in everything that perfectly fits by rounding down the shares
+    trap_pool = {
+        trap: int(count) 
+            for trap, count in perfect_distribution.items()
+    }
+
+    # Grab a sorted list of all the remainders
+    remainders = sorted(
+        weights.keys(), 
+        key=lambda i: perfect_distribution[i] - trap_pool[i], 
+        reverse=True
+    )
+
+    # Fill in the rest according to the sorted list
+    to_add = trap_item_count - sum(trap_pool.values())
+
+    for trap_name in remainders[:to_add]:
+        trap_pool[trap_name] += 1
+
+    return [
+        trap 
+            for trap, count in trap_pool.items() 
+            for _ in range(count)
+    ]
