@@ -8,6 +8,7 @@ from .option_groups import *
 class MoonlighterOptions(PerGameCommonOptions):
     # Goal Options
     goal: Goal
+    require_bosses: RequireBosses
 
     # Game Options
     progressive_dungeon_floors: ProgressiveDungeonFloors
@@ -37,7 +38,7 @@ class MoonlighterOptions(PerGameCommonOptions):
 option_groups = [
     OptionGroup(
         "Goal Options",
-        [Goal],
+        [Goal, RequireBosses],
     ),
     OptionGroup(
         "Game Options",

@@ -3,11 +3,11 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from rule_builder.options import OptionFilter
-from rule_builder.rules import Has, HasAll, HasAny, HasAnyCount, Rule, True_
+from rule_builder.rules import CanReachLocation, Has, HasAll, HasAny, HasAnyCount, Rule, True_
 
 from .option_groups import Goal
 
-from .data import DUNGEON_NAMES, equipment
+from .data import DUNGEON_NAMES, BOSS_NAMES, equipment
 
 if TYPE_CHECKING:
     from .world import MoonlighterWorld
@@ -17,15 +17,20 @@ def set_all_rules(world: MoonlighterWorld) -> None:
     set_all_location_rules(world)
     set_completion_condition(world)
 
-def has_dungeon_entrance(dungeon: str, floor: int):
+def has_dungeon_entrance(world: MoonlighterWorld, dungeon: str, floor: int):
     if dungeon == "Unknown":
-        return HasAll("Golem Key", "Forest Key", "Desert Key", "Tech Key")
+        rule = HasAll("Golem Key", "Forest Key", "Desert Key", "Tech Key")
+        if world.options.require_bosses:
+            for boss in BOSS_NAMES.values():
+                rule &= CanReachLocation(f"Defeat {boss}")
+
+        return rule
 
     return Has(f"Unlock {dungeon} Dungeon") | Has(f"Progressive {dungeon} Floor", floor)
 
 
 def can_enter_dungeon(world: MoonlighterWorld, dungeon: str, floor: int = 3) -> Rule:
-    key_rule = has_dungeon_entrance(dungeon, floor)
+    key_rule = has_dungeon_entrance(world, dungeon, floor)
     tier = world.dungeon_order.index(dungeon) if dungeon != "Unknown" else -1
     required_level = tier if floor < 3 else tier + 1
 
