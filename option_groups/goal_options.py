@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from Options import Choice
+from Options import Choice, DefaultOnToggle
 
 
 class Goal(Choice):
@@ -16,4 +16,10 @@ class Goal(Choice):
     option_5th_dungeon = 0
     option_pirate_boss = 1
     option_collector = 2
-    
+
+class RequireBosses(DefaultOnToggle):
+    """
+    If enabled, opening the 5th dungeon requires defeating every boss in addition
+    to the 4 keys.
+    """
+    display_name = "Require Bosses"
