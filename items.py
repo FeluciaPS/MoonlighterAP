@@ -19,8 +19,12 @@ class MoonlighterItem(Item):
 
 def get_random_filler_item(world: MoonlighterWorld) -> str:
     items = item_names.FILLER_ITEMS
+    items += world.filler_equipment
+    choice = world.random.choice(items)
+    if choice in world.filler_equipment:
+        world.filler_equipment.remove(choice)
+    return choice
 
-    return world.random.choice(items)
 
 
 def create_item_object(world: MoonlighterWorld, name: str):
