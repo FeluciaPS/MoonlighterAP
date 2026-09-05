@@ -4,7 +4,7 @@ from Options import OptionError
 from worlds.AutoWorld import World
 
 from .data import equipment
-from .option_groups import EquipmentRandomizer, Goal
+from .option_groups import EquipmentRandomizer, Goal, is_equipment_removed
 
 from . import items, locations, options, regions, rules, web_world
 
@@ -65,17 +65,20 @@ class MoonlighterWorld(World):
         # Set up filler equipment to use later
         self.filler_equipment = []
         excluded_equipment = (set(equipment.WEAPON_TYPES) | set(equipment.ARMOR_TYPES)) ^ self.options.included_equipment.value
-        if self.options.broom_only:
+        if is_equipment_removed(self, "weapons"):
             excluded_equipment &= set(equipment.ARMOR_TYPES)
+        if is_equipment_removed(self, "armor"):
+            excluded_equipment &= set(equipment.WEAPON_TYPES)
+        
         for category in excluded_equipment:
             if category.startswith("_"):
                 continue
 
             self.filler_equipment += [
-                item_name 
+                item_name
                     for item_name in equipment.PROGRESSIVE_EQUIPMENT_ITEM_NAMES[category]
                     for _ in range (4)
-            ]  
+            ]
 
     # TODO: this shouldn't end up in v1.0 but is a good catch during development
     def pre_fill(self) -> None:

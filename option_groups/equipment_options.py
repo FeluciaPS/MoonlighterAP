@@ -1,5 +1,10 @@
+from __future__ import annotations
+
 from Options import Choice, OptionSet, Toggle
 
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from ..world import MoonlighterWorld
 
 class EquipmentRandomizer(Choice):
     """
@@ -21,8 +26,6 @@ class IncludedEquipment(OptionSet):
     """
     Choose the equipment that should be included in the randomizer. Other equipment may be included
     as filler items, but will not be considered in logic.
-
-    If no weapons or no armor is selected, they also will not appear as filler items.
     """
     display_name = "Included Equipment"
 
@@ -41,9 +44,33 @@ class IncludedEquipment(OptionSet):
 
     default = [key for key in valid_keys.copy() if not key.startswith("_")]
 
+class ExcludedEquipmentBehaviour(Choice):
+    """
+    Changes whether excluded armor and weapons are added to the filler pool or entirely excluded from the item pool
+
+    - Filler: Excluded equipment is added to the filler pool
+    - Weapons Only: Only excluded weapons are added to the filler pool, excluded armor is removed
+    - Armor Only: Only excluded armor is added to the filler pool, excluded weapons are removed
+    - Removed: Excluded equipment is removed from the item pool entirely.
+    """
+    display_name = "Include Filler Equipment"
+
+    default = 0
+    option_filler = 0
+    option_weapons_only = 1
+    option_armor_only = 2
+    option_removed = 3
+
 class BroomOnly(Toggle):
     """
     Removes all weapons from the itempool and shops, making you beat the game with only the
     broom spear.
     """
     display_name = "Broom Only"
+
+def is_equipment_removed(world: MoonlighterWorld, type: str):
+    if type == "weapons":
+        return world.options.excluded_equipment_behaviour in [ExcludedEquipmentBehaviour.option_armor_only, ExcludedEquipmentBehaviour.option_removed] or world.options.broom_only
+    if type == "armor":
+        return world.options.excluded_equipment_behaviour in [ExcludedEquipmentBehaviour.option_weapons_only, ExcludedEquipmentBehaviour.option_removed]
+    raise Exception(f"Incorrect option {type} passed into is_equipment_removed")
