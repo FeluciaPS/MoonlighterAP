@@ -24,8 +24,11 @@ class EquipmentRandomizer(Choice):
 
 class IncludedEquipment(OptionSet):
     """
-    Choose the equipment that should be included in the randomizer. Other equipment may be included
-    as filler items, but will not be considered in logic.
+    Choose the equipment that will be considered for dungeon logic. All equipment selected here is guaranteed to show
+    up in the item pool. Other equipment may be included as filler items, but will not be considered in logic.
+    Note that removing all weapons or armor from logic can make the game significantly harder
+
+    You can use "_allweapons" or "_allarmor" to include all weapons or armor at once.
     """
     display_name = "Included Equipment"
 
@@ -44,7 +47,7 @@ class IncludedEquipment(OptionSet):
 
     default = [key for key in valid_keys.copy() if not key.startswith("_")]
 
-class ExcludedEquipmentBehaviour(Choice):
+class ExcludedEquipmentBehavior(Choice):
     """
     Changes whether excluded armor and weapons are added to the filler pool or entirely excluded from the item pool
 
@@ -70,7 +73,7 @@ class BroomOnly(Toggle):
 
 def is_equipment_removed(world: MoonlighterWorld, type: str):
     if type == "weapons":
-        return world.options.excluded_equipment_behaviour in [ExcludedEquipmentBehaviour.option_armor_only, ExcludedEquipmentBehaviour.option_removed] or world.options.broom_only
+        return world.options.excluded_equipment_behavior in [ExcludedEquipmentBehavior.option_armor_only, ExcludedEquipmentBehavior.option_removed] or world.options.broom_only
     if type == "armor":
-        return world.options.excluded_equipment_behaviour in [ExcludedEquipmentBehaviour.option_weapons_only, ExcludedEquipmentBehaviour.option_removed]
+        return world.options.excluded_equipment_behavior in [ExcludedEquipmentBehavior.option_weapons_only, ExcludedEquipmentBehavior.option_removed]
     raise Exception(f"Incorrect option {type} passed into is_equipment_removed")

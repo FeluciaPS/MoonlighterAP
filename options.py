@@ -17,7 +17,7 @@ class MoonlighterOptions(PerGameCommonOptions):
     # Item Options
     equipment_randomizer: EquipmentRandomizer
     included_equipment: IncludedEquipment
-    excluded_equipment_behaviour: ExcludedEquipmentBehaviour
+    excluded_equipment_behavior: ExcludedEquipmentBehavior
     broom_only: BroomOnly
 
     # Other Options
@@ -46,7 +46,7 @@ option_groups = [
     ),
     OptionGroup(
         "Equipment Options",
-        [EquipmentRandomizer, IncludedEquipment, ExcludedEquipmentBehaviour, BroomOnly],
+        [EquipmentRandomizer, IncludedEquipment, ExcludedEquipmentBehavior, BroomOnly],
     ),
     OptionGroup(
         "Other Randomizer Options",

@@ -42,13 +42,16 @@ def can_enter_dungeon(world: MoonlighterWorld, dungeon: str, floor: int = 3) -> 
         # You should always have one of the base weapons, but I think a rule is still appropriate
         return key_rule & HasAny(*equipment.STARTING_WEAPON_NAMES)
 
-    required_items = {
-        "weapon": {}
-    }
+    required_items = {}
     
     if world.options.broom_only: 
-        required_items["weapon"]["Broom Spear"] = 1
-    else:
+        required_items["broom"] = {
+            "Broom Spear": 1
+        }
+
+    # Only add weapon logic if any weapons are logically required
+    if world.options.included_equipment.value & set(equipment.WEAPON_TYPES):
+        required_items["weapon"] = {}
         for value in equipment.PROGRESSIVE_WEAPON_ITEM_DICT.values():
             for item in value:
                 required_items["weapon"][item] = required_level
@@ -59,10 +62,11 @@ def can_enter_dungeon(world: MoonlighterWorld, dungeon: str, floor: int = 3) -> 
         "boots": equipment.PROGRESSIVE_BOOTS_ITEM_NAMES
     }
 
-    for key, value in armor_items.items():
-        required_items[key] = {}
-        for item in value:
-            required_items[key][item] = required_level
+    if world.options.included_equipment.value & set(equipment.ARMOR_TYPES):
+        for key, value in armor_items.items():
+            required_items[key] = {}
+            for item in value:
+                required_items[key][item] = required_level
 
     equipment_rule = True_()
 
