@@ -19,3 +19,10 @@ class ProgressiveDungeons(DefaultOffToggle):
     This option does not work.
     """
     display_name = "Progressive Dungeons"
+
+class RequireSale(DefaultOffToggle):
+    """
+    Enables Sale of Archipelago Items.
+
+    If enabled, instead of locations sending checks directly, they drop inventory items that must be sold in your shop to send the check.
+    """
