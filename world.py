@@ -121,7 +121,8 @@ class MoonlighterWorld(World):
         # Pass options into slot data for the mod to use
         slot_data["options"] = self.options.as_dict(
             "goal",
-            "death_link"
+            "death_link",
+            "require_sale"
         )
 
         return slot_data

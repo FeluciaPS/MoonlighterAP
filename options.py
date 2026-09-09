@@ -13,6 +13,7 @@ class MoonlighterOptions(PerGameCommonOptions):
     # Game Options
     progressive_dungeon_floors: ProgressiveDungeonFloors
     progressive_dungeons: ProgressiveDungeons
+    require_sale: RequireSale
 
     # Item Options
     equipment_randomizer: EquipmentRandomizer
@@ -42,7 +43,7 @@ option_groups = [
     ),
     OptionGroup(
         "Game Options",
-        [ProgressiveDungeonFloors, ProgressiveDungeons],
+        [ProgressiveDungeonFloors, ProgressiveDungeons, RequireSale],
     ),
     OptionGroup(
         "Equipment Options",
