@@ -68,6 +68,13 @@ def create_all_items(world: MoonlighterWorld) -> None:
 
         itempool += [world.create_item(f"{dungeon} Key")]
 
+    first_dungeon = world.dungeon_order[0]
+
+    if world.options.progressive_dungeon_floors:
+        world.multiworld.early_items[world.player][f"Progressive {first_dungeon} Floor"] = 1
+    else:
+        world.multiworld.early_items[world.player][f"Unlock {first_dungeon} Dungeon"] = 1
+
     # Equipment items
     starting_weapon = "Broom Spear" if world.options.broom_only else world.random.choice(equipment.STARTING_WEAPON_NAMES)
     world.push_precollected(world.create_item(starting_weapon))
