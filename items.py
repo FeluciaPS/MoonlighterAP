@@ -18,12 +18,20 @@ class MoonlighterItem(Item):
 
 
 def get_random_filler_item(world: MoonlighterWorld) -> str:
-    items = item_names.FILLER_ITEMS
-    items += world.filler_equipment
-    choice = world.random.choice(items)
-    if choice in world.filler_equipment:
-        world.filler_equipment.remove(choice)
-    return choice
+    categories = ["Filler Item"]
+    if len(world.filler_equipment): categories += ["Equipment Item"]
+    if len(world.decoration_items): categories += ["Decoration Item"]
+    match world.random.choice(categories):
+        case "Equipment Item":
+            choice = world.random.choice(world.filler_equipment)
+            world.filler_equipment.remove(choice)
+            return choice
+        case "Decoration Item":
+            choice = world.random.choice(world.decoration_items)
+            world.decoration_items.remove(choice)
+            return choice
+        case _:
+            return world.random.choice(item_names.FILLER_ITEMS)
 
 
 
@@ -36,6 +44,9 @@ def create_item_object(world: MoonlighterWorld, name: str):
         classification = ItemClassification.progression
 
     if name in item_names.FILLER_ITEMS:
+        classification = ItemClassification.filler
+
+    if name in item_names.DECORATION_ITEMS:
         classification = ItemClassification.filler
 
     # Equipment is sometimes a progression item

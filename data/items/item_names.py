@@ -18,7 +18,35 @@ DUNGEON_ITEMS = [
 ]
 
 FILLER_ITEMS = [
-    "Filler Item"
+    "Money"
+]
+
+DECORATION_ITEMS = [
+    "Carnivorous Mutae Miniature",
+    "Desert Cloth",
+    "Desert Lava Idol Decoration",
+    "Dimensional Fungus Colony",
+    "Dimensional Whole",
+    "Electric Device",
+    "Energy Flux Miniature",
+    "Forest Flowers",
+    "Forest Ivy",
+    "Forest Wood Figure Decoration",
+    "Fruit Bowl",
+    "Golem Banner",
+    "Golem Books",
+    "Golem Crystals",
+    "Golem Fountain",
+    "Golem Statue Decoration",
+    "Lava Clock",
+    "Lava Fountain",
+    "Monster Skull Decoration",
+    "Naja Miniature",
+    "Shock Valves",
+    "Shopkeeper's Pot",
+    "Spectral Sconce",
+    "Tech Recycled Metal Ball Decoration",
+    "Tech Shelf",
 ]
 
 TRAP_ITEMS = [
@@ -36,6 +64,10 @@ for name in DUNGEON_ITEMS:
     n += 1
 
 for name in FILLER_ITEMS:
+    ITEM_IDS[name] = n
+    n += 1
+
+for name in DECORATION_ITEMS:
     ITEM_IDS[name] = n
     n += 1
 

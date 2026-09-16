@@ -5,6 +5,7 @@ from worlds.AutoWorld import World
 
 from .data import equipment
 from .option_groups import EquipmentRandomizer, Goal, is_equipment_removed
+from .data.items import item_names
 
 from . import items, locations, options, regions, rules, web_world
 
@@ -79,6 +80,9 @@ class MoonlighterWorld(World):
                     for item_name in equipment.PROGRESSIVE_EQUIPMENT_ITEM_NAMES[category]
                     for _ in range (4)
             ]
+
+        # Send a list of decoration items to use as one time fillers
+        self.decoration_items = item_names.DECORATION_ITEMS
 
     # TODO: this shouldn't end up in v1.0 but is a good catch during development
     def pre_fill(self) -> None:
