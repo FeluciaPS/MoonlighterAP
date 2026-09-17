@@ -1,10 +1,9 @@
 from __future__ import annotations
 
-from Options import Toggle
-from worlds.ladx.Options import DefaultOffToggle
+from Options import Toggle, DefaultOnToggle
 
 
-class ProgressiveDungeonFloors(Toggle):
+class ProgressiveDungeonFloors(DefaultOnToggle):
     """
     Enables Progressive Dungeon Floors.
 
@@ -12,7 +11,7 @@ class ProgressiveDungeonFloors(Toggle):
     """
     display_name = "Progressive Dungeon Floors"
 
-class ProgressiveDungeons(DefaultOffToggle):
+class ProgressiveDungeons(Toggle):
     """
     Enables Progressive Dungeons, unlocking dungeons in a predictable order instead of whenever you find the associated item.
 
@@ -20,7 +19,7 @@ class ProgressiveDungeons(DefaultOffToggle):
     """
     display_name = "Progressive Dungeons"
 
-class RequireSale(DefaultOffToggle):
+class RequireSale(Toggle):
     """
     Enables Sale of Archipelago Items.
 
