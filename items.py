@@ -91,7 +91,7 @@ def create_all_items(world: MoonlighterWorld) -> None:
     world.push_precollected(world.create_item(starting_weapon))
 
     if world.options.equipment_randomizer == EquipmentRandomizer.option_progressive:
-        for category in world.options.included_equipment.value:
+        for category in sorted(world.options.included_equipment):
             if category.startswith("_"):
                 continue
 

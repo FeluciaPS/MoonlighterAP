@@ -32,6 +32,8 @@ class MoonlighterWorld(World):
 
     # World properties
     dungeon_order = ["Golem", "Forest", "Desert", "Tech"]
+    filler_equipment = []
+    decoration_items = item_names.DECORATION_ITEMS
 
     def raise_unimplemented_option(name: str, option: str, required: bool = False):
         if required:
@@ -64,14 +66,13 @@ class MoonlighterWorld(World):
             self.options.included_equipment.value &= set(equipment.ARMOR_TYPES)
         
         # Set up filler equipment to use later
-        self.filler_equipment = []
         excluded_equipment = (set(equipment.WEAPON_TYPES) | set(equipment.ARMOR_TYPES)) ^ self.options.included_equipment.value
         if is_equipment_removed(self, "weapons"):
             excluded_equipment &= set(equipment.ARMOR_TYPES)
         if is_equipment_removed(self, "armor"):
             excluded_equipment &= set(equipment.WEAPON_TYPES)
         
-        for category in excluded_equipment:
+        for category in sorted(excluded_equipment):
             if category.startswith("_"):
                 continue
 
@@ -80,9 +81,6 @@ class MoonlighterWorld(World):
                     for item_name in equipment.PROGRESSIVE_EQUIPMENT_ITEM_NAMES[category]
                     for _ in range (4)
             ]
-
-        # Send a list of decoration items to use as one time fillers
-        self.decoration_items = item_names.DECORATION_ITEMS
 
     # TODO: this shouldn't end up in v1.0 but is a good catch during development
     def pre_fill(self) -> None:
