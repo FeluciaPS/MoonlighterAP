@@ -44,6 +44,11 @@ def create_regular_locations(world: MoonlighterWorld) -> None:
     town_locations = get_location_names_with_ids(["Tree Money"])
     town.add_locations(town_locations, MoonlighterLocation)
 
+    # Tutorial locations
+    tutorial = world.get_region("Tutorial")
+    tutorial_locations = get_location_names_with_ids(["It's Dangerous To Go Alone", "Discover Pete"])
+
+    tutorial.add_locations(tutorial_locations, MoonlighterLocation)
 
     # Dungeon locations
     for dungeon_index, dungeon in enumerate(DUNGEON_NAMES):

@@ -16,9 +16,13 @@ def create_regions(world: MoonlighterWorld):
 
     # Town serves as the origin region
     town = Region("Town", world.player, world.multiworld)
-    
+
+    # Tutorial is a separate region for convenience
+    tutorial = Region("Tutorial", world.player, world.multiworld)
+
     regions = [
-        town
+        town,
+        tutorial
     ]
 
     # Add a region for each of the 3 floors in each dungeon.
@@ -45,6 +49,9 @@ def create_regions(world: MoonlighterWorld):
 
 def connect_regions(world: MoonlighterWorld):
     town = world.get_region("Town")
+
+    tutorial = world.get_region("Tutorial")
+    town.connect(tutorial, "Tutorial Entrance")
 
     for dungeon in DUNGEON_NAMES:
         region_1 = world.get_region(f'{dungeon} Dungeon I')
