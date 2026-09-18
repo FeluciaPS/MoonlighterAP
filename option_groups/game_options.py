@@ -32,5 +32,7 @@ class EarlyDungeon(Toggle):
     Guarantees a dungeon unlock will appear early in the game, if this is enabled your first dungeon unlock will always be in a 
     location that is available in sphere 1 in your multiworld (meaning items are required to access it)
     
+    As of now, turning this off has a chance to cause generation failures (though at least 90% of generations should still succeed)
+
     Down the line I may add an option to specifically put it in your own world, but that's a future me problem -Felucia"""
     display_name = "Early Dungeon"
