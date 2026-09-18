@@ -30,7 +30,7 @@ class RequireSale(Toggle):
 class EarlyDungeon(DefaultOnToggle):
     """
     Guarantees a dungeon unlock will appear early in the game, if this is enabled your first dungeon unlock will always be in a 
-    location that is available in sphere 1 in your multiworld (meaning items are required to access it)
+    location that is available in sphere 1 in your multiworld (meaning no items are required to access it)
     
     As of now, turning this off has a chance to cause generation failures (though at least 90% of generations should still succeed)
 
