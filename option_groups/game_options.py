@@ -27,7 +27,7 @@ class RequireSale(Toggle):
     """
     display_name = "Require Sale"
 
-class EarlyDungeon(Toggle):
+class EarlyDungeon(DefaultOnToggle):
     """
     Guarantees a dungeon unlock will appear early in the game, if this is enabled your first dungeon unlock will always be in a 
     location that is available in sphere 1 in your multiworld (meaning items are required to access it)
