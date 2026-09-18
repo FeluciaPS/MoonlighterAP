@@ -13,6 +13,7 @@ class MoonlighterOptions(PerGameCommonOptions):
     # Game Options
     progressive_dungeon_floors: ProgressiveDungeonFloors
     progressive_dungeons: ProgressiveDungeons
+    early_dungeon: EarlyDungeon
     require_sale: RequireSale
 
     # Item Options
@@ -29,12 +30,6 @@ class MoonlighterOptions(PerGameCommonOptions):
     trap_percentage: TrapPercentage
     trap_weights: TrapWeights
 
-    '''
-    Some option plans so I don't forget them:
-    - start_with_dungeon - If disabled, only town checks will be available at the start
-    - progressive_dungeons - Unlocks dungeons in order instead of randomly
-    '''
-
 
 option_groups = [
     OptionGroup(
@@ -43,7 +38,7 @@ option_groups = [
     ),
     OptionGroup(
         "Game Options",
-        [ProgressiveDungeonFloors, ProgressiveDungeons, RequireSale],
+        [ProgressiveDungeonFloors, ProgressiveDungeons, EarlyDungeon, RequireSale],
     ),
     OptionGroup(
         "Equipment Options",

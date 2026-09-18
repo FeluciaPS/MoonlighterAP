@@ -25,3 +25,12 @@ class RequireSale(Toggle):
 
     If enabled, instead of locations sending checks directly, they drop inventory items that must be sold in your shop to send the check.
     """
+    display_name = "Require Sale"
+
+class EarlyDungeon(Toggle):
+    """
+    Guarantees a dungeon unlock will appear early in the game, if this is enabled your first dungeon unlock will always be in a 
+    location that is available in sphere 1 in your multiworld (meaning items are required to access it)
+    
+    Down the line I may add an option to specifically put it in your own world, but that's a future me problem -Felucia"""
+    display_name = "Early Dungeon"
