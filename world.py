@@ -35,7 +35,7 @@ class MoonlighterWorld(World):
     filler_equipment = []
     decoration_items = item_names.DECORATION_ITEMS
 
-    def raise_unimplemented_option(name: str, option: str, required: bool = False):
+    def raise_unimplemented_option(self, name: str, option: str, required: bool = False):
         if required:
             raise OptionError(f"{name} must be set to {option}, because other options are unimplemented.")
         else:
