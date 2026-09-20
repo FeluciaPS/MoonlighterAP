@@ -114,7 +114,7 @@ def create_events(world: MoonlighterWorld) -> None:
     unknown_dungeon = world.get_region("Unknown Dungeon")
 
     # Victory events dictate the victory condition later
-    if world.options.goal == goal_options.Goal.option_5th_dungeon:
+    if world.options.goal == goal_options.Goal.option_fifth_dungeon:
         unknown_dungeon.add_event(
             "Enter Unknown Dungeon", "Victory", location_type=MoonlighterLocation, item_type=MoonlighterItem
         )
