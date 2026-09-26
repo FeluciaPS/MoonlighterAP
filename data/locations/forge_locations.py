@@ -37,7 +37,7 @@ WEAPON_FORGE_LOCATION_IDS = {
     # Desert
     "Craft Commander Short Sword": 35,
     "Craft Reborn Short Sword": 36,
-    "Craft Vuclan Big Sword": 37,
+    "Craft Vulcan Big Sword": 37,
     "Craft Blaze Big Sword": 38,
     "Craft Monkey Spear": 39,
     "Craft Hell Spear": 40,
