@@ -1,6 +1,6 @@
 from collections.abc import Mapping
-from typing import Any
-from Options import OptionError
+from typing import Any, Optional
+from Options import Option, OptionError
 from worlds.AutoWorld import World
 
 from .data import equipment
@@ -49,6 +49,20 @@ class MoonlighterWorld(World):
 
         if self.options.goal == Goal.option_collector:
             self.raise_unimplemented_option("Goal", "Collector")
+
+        # UT support
+        re_gen_passthrough = getattr(self.multiworld, "re_gen_passthrough", {})
+        if re_gen_passthrough and self.game in re_gen_passthrough:
+            # Get the passed through slot data from the real generation
+            slot_data: dict[str, Any] = re_gen_passthrough[self.game]
+
+            slot_options: dict[str, Any] = slot_data.get("options", {})
+            # Set all your options here instead of getting them from the yaml
+            for key, value in slot_options.items():
+                opt: Optional[Option] = getattr(self.options, key, None)
+                if opt is not None:
+                    # You can also set .value directly but that won't work if you have OptionSets
+                    setattr(self.options, key, opt.from_any(value))
 
         # Shuffle and store the dungeon order, this will be used for combat logic later
         if not(self.options.progressive_dungeons):
@@ -123,8 +137,25 @@ class MoonlighterWorld(World):
         # Pass options into slot data for the mod to use
         slot_data["options"] = self.options.as_dict(
             "goal",
+            "require_bosses",
+            "progressive_dungeon_floors",
+            "progressive_dungeons",
+            "early_dungeon",
+            "require_sale",
+            "equipment_randomizer",
+            "included_equipment",
+            "excluded_equipment_behavior",
+            "broom_only",
             "death_link",
-            "require_sale"
+            "traps",
+            "trap_percentage",
+            "trap_weights"
         )
 
         return slot_data
+
+@staticmethod
+def interpret_slot_data(slot_data: dict[str, Any]) -> dict[str, Any]:
+    # Returning a truthy value here tells Universal Tracker to re-generate
+    # the world with the slot data
+    return slot_data
