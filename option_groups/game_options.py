@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from Options import Toggle, DefaultOnToggle
+from Options import Toggle, DefaultOnToggle, Visibility
 
 
 class ProgressiveDungeonFloors(DefaultOnToggle):
@@ -11,13 +11,15 @@ class ProgressiveDungeonFloors(DefaultOnToggle):
     """
     display_name = "Progressive Dungeon Floors"
 
-class ProgressiveDungeons(Toggle):
+class ProgressiveDungeons(DefaultOnToggle):
     """
     Enables Progressive Dungeons, unlocking dungeons in a predictable order instead of whenever you find the associated item.
 
     This option does not work.
     """
     display_name = "Progressive Dungeons"
+
+    visibility = Visibility.none
 
 class RequireSale(Toggle):
     """
