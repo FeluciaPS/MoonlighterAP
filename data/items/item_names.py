@@ -22,31 +22,24 @@ FILLER_ITEMS = [
 ]
 
 DECORATION_ITEMS = [
-    "Carnivorous Mutae Miniature",
-    "Desert Cloth",
-    "Desert Lava Idol Decoration",
-    "Dimensional Fungus Colony",
-    "Dimensional Whole",
-    "Electric Device",
-    "Energy Flux Miniature",
-    "Forest Flowers",
-    "Forest Ivy",
-    "Forest Wood Figure Decoration",
-    "Fruit Bowl",
+    "Family picture",
+    "Decorative pot",
+    "Golem Fountain",
     "Golem Banner",
     "Golem Books",
     "Golem Crystals",
-    "Golem Fountain",
-    "Golem Statue Decoration",
-    "Lava Clock",
+    "Forest Flowers",
+    "Forest Ivy",
+    "Fruit Bowl",
+    "Carnivorous Mutae Miniature",
+    "Desert Cloth",
     "Lava Fountain",
-    "Monster Skull Decoration",
+    "Lava Clock",
     "Naja Miniature",
-    "Shock Valves",
-    "Shopkeeper's Pot",
-    "Spectral Sconce",
-    "Tech Recycled Metal Ball Decoration",
     "Tech Shelf",
+    "Electric Device",
+    "Shock Valve",
+    "Energy Flux Miniature"
 ]
 
 TRAP_ITEMS = [
