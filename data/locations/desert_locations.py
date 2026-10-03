@@ -3,6 +3,8 @@ INTERNAL_LOCATION_IDS = {
     "Desert Note 2": 2,
     "Desert Note 3": 3,
     "Defeat Naja": 10,
+    "Defeat Hexa": 11,
+    "Defeat Corrupted Hexa": 12,
 }
 
 LOCATION_IDS = {}
