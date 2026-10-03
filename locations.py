@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from BaseClasses import Location
-from .data import DUNGEON_NAMES, BOSS_NAMES, town_locations, golem_locations, forest_locations, desert_locations, tech_locations, hawker_locations, forge_locations
+from .data import DUNGEON_NAMES, BOSS_NAMES, MINIBOSS_NAMES, town_locations, golem_locations, forest_locations, desert_locations, tech_locations, hawker_locations, forge_locations
 
 from .items import MoonlighterItem
 from .option_groups import goal_options
@@ -67,6 +67,12 @@ def create_regular_locations(world: MoonlighterWorld) -> None:
         region_1.add_locations(region_1_locations, MoonlighterLocation)
         region_3.add_locations(region_3_locations, MoonlighterLocation)
 
+        # Minibosses
+        region_1_miniboss_locations = get_location_names_with_ids([f"Defeat {MINIBOSS_NAMES[dungeon]}"])
+        region_2_miniboss_locations = get_location_names_with_ids([f"Defeat Corrupted {MINIBOSS_NAMES[dungeon]}"])
+        
+        region_1.add_locations(region_1_miniboss_locations, MoonlighterLocation)
+        region_2.add_locations(region_2_miniboss_locations, MoonlighterLocation)
 
         # Hawker locations
         hawker_group_start, hawker_group_end = hawker_locations.hawker_location_groups[dungeon]
