@@ -52,6 +52,7 @@ def create_regular_locations(world: MoonlighterWorld) -> None:
 
     # Dungeon locations
     for dungeon_index, dungeon in enumerate(DUNGEON_NAMES):
+        dungeon_region = world.get_region(f"{dungeon} Dungeon")
         region_1 = world.get_region(f"{dungeon} Dungeon I")
         region_2 = world.get_region(f"{dungeon} Dungeon II")
         region_3 = world.get_region(f"{dungeon} Dungeon III")
@@ -87,7 +88,7 @@ def create_regular_locations(world: MoonlighterWorld) -> None:
             if hawker_group_start <= value < hawker_group_end and value % 4 == 0
         ])
          
-        region_1.add_locations(hawker_locations_preboss, MoonlighterLocation)
+        dungeon_region.add_locations(hawker_locations_preboss, MoonlighterLocation)
         region_3.add_locations(hawker_locations_postboss, MoonlighterLocation)
 
         # Forge armour locations

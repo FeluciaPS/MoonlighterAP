@@ -54,10 +54,12 @@ def connect_regions(world: MoonlighterWorld):
     town.connect(tutorial, "Tutorial Entrance")
 
     for dungeon in DUNGEON_NAMES:
+        dungeon_region = world.get_region(f'{dungeon} Dungeon')
         region_1 = world.get_region(f'{dungeon} Dungeon I')
         region_2 = world.get_region(f'{dungeon} Dungeon II')
         region_3 = world.get_region(f'{dungeon} Dungeon III')
 
+        town.connect(dungeon_region, f'{dungeon} Dungeon Entrance')
         town.connect(region_1, f'{dungeon} Dungeon I Entrance')
         region_1.connect(region_2, f'{dungeon} Dungeon II Entrance')
         region_2.connect(region_3, f'{dungeon} Dungeon III Entrance')

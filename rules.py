@@ -78,6 +78,10 @@ def can_enter_dungeon(world: MoonlighterWorld, dungeon: str, floor: int = 3) -> 
 def set_all_entrance_rules(world: MoonlighterWorld) -> None:
     numerals = ["I", "II", "III"]
     for dungeon in DUNGEON_NAMES:
+        dungeon_entrance = world.get_entrance(f"{dungeon} Dungeon Entrance")
+        rule = has_dungeon_entrance(world, dungeon, 1)
+        world.set_rule(dungeon_entrance, rule)
+
         for floor in range(3):
             dungeon_floor = world.get_entrance(f"{dungeon} Dungeon {numerals[floor]} Entrance")
             rule = can_enter_dungeon(world, dungeon, floor + 1)
