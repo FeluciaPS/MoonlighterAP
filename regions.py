@@ -25,8 +25,14 @@ def create_regions(world: MoonlighterWorld):
         tutorial
     ]
 
+    # Add a region for each dungeon. Used for checks that don't require you to enter
+    # the dungeon or otherwise need no combat logic
+    regions += [
+        Region(f'{dungeon} Dungeon', world.player, world.multiworld) 
+            for dungeon in DUNGEON_NAMES 
+    ]
+
     # Add a region for each of the 3 floors in each dungeon.
-    # Worst case scenario we won't end up using all 3 and we just flatten it later
     regions += [
         Region(f'{dungeon} Dungeon {floor}', world.player, world.multiworld) 
             for dungeon in DUNGEON_NAMES 
