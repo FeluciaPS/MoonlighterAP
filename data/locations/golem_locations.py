@@ -3,6 +3,8 @@ INTERNAL_LOCATION_IDS = {
     "Golem Note 2": 2,
     "Golem Note 3": 3,
     "Defeat Golem King": 10,
+    "Defeat Golem Warrior": 11,
+    "Defeat Corrupted Golem Warrior": 12,
 }
 
 LOCATION_IDS = {}

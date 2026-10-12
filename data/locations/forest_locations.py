@@ -3,6 +3,8 @@ INTERNAL_LOCATION_IDS = {
     "Forest Note 2": 2,
     "Forest Note 3": 3,
     "Defeat Carnivorous Mutae": 10,
+    "Defeat Mavu Tree": 11,
+    "Defeat Corrupted Mavu Tree": 12,
 }
 
 LOCATION_IDS = {}

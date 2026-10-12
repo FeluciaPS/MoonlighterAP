@@ -8,25 +8,48 @@ from .option_groups import *
 class MoonlighterOptions(PerGameCommonOptions):
     # Goal Options
     goal: Goal
+    require_bosses: RequireBosses
+
+    # Game Options
+    progressive_dungeon_floors: ProgressiveDungeonFloors
+    progressive_dungeons: ProgressiveDungeons
+    early_dungeon: EarlyDungeon
+    require_sale: RequireSale
+
+    # Item Options
+    equipment_randomizer: EquipmentRandomizer
+    included_equipment: IncludedEquipment
+    excluded_equipment_behavior: ExcludedEquipmentBehavior
+    broom_only: BroomOnly
 
     # Other Options
     death_link: DeathLink
 
-    '''
-    Some option plans so I don't forget them:
-    - start_with_dungeon - If disabled, only town checks will be available at the start
-    - randomize_dungeon_floors - Splits dungeon unlocks into (progressive) floor unlocks
-    - progressive_dungeons - Unlocks dungeons in order instead of randomly
-    '''
+    # Trap Options
+    traps: Traps
+    trap_percentage: TrapPercentage
+    trap_weights: TrapWeights
 
 
 option_groups = [
     OptionGroup(
         "Goal Options",
-        [Goal],
+        [Goal, RequireBosses],
+    ),
+    OptionGroup(
+        "Game Options",
+        [ProgressiveDungeonFloors, ProgressiveDungeons, EarlyDungeon, RequireSale],
+    ),
+    OptionGroup(
+        "Equipment Options",
+        [EquipmentRandomizer, IncludedEquipment, ExcludedEquipmentBehavior, BroomOnly],
     ),
     OptionGroup(
         "Other Randomizer Options",
         [DeathLink],
+    ),
+    OptionGroup(
+        "Trap Options",
+        [Traps, TrapPercentage, TrapWeights],
     ),
 ]

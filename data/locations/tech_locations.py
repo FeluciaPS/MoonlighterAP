@@ -3,6 +3,8 @@ INTERNAL_LOCATION_IDS = {
     "Tech Note 2": 2,
     "Tech Note 3": 3,
     "Defeat Energy Flux": 10,
+    "Defeat Oscillator": 11,
+    "Defeat Corrupted Oscillator": 12,
 }
 
 LOCATION_IDS = {}

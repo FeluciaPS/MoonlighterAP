@@ -16,13 +16,23 @@ def create_regions(world: MoonlighterWorld):
 
     # Town serves as the origin region
     town = Region("Town", world.player, world.multiworld)
-    
+
+    # Tutorial is a separate region for convenience
+    tutorial = Region("Tutorial", world.player, world.multiworld)
+
     regions = [
-        town
+        town,
+        tutorial
+    ]
+
+    # Add a region for each dungeon. Used for checks that don't require you to enter
+    # the dungeon or otherwise need no combat logic
+    regions += [
+        Region(f'{dungeon} Dungeon', world.player, world.multiworld) 
+            for dungeon in DUNGEON_NAMES 
     ]
 
     # Add a region for each of the 3 floors in each dungeon.
-    # Worst case scenario we won't end up using all 3 and we just flatten it later
     regions += [
         Region(f'{dungeon} Dungeon {floor}', world.player, world.multiworld) 
             for dungeon in DUNGEON_NAMES 
@@ -46,18 +56,23 @@ def create_regions(world: MoonlighterWorld):
 def connect_regions(world: MoonlighterWorld):
     town = world.get_region("Town")
 
+    tutorial = world.get_region("Tutorial")
+    town.connect(tutorial, "Tutorial Entrance")
+
     for dungeon in DUNGEON_NAMES:
+        dungeon_region = world.get_region(f'{dungeon} Dungeon')
         region_1 = world.get_region(f'{dungeon} Dungeon I')
         region_2 = world.get_region(f'{dungeon} Dungeon II')
         region_3 = world.get_region(f'{dungeon} Dungeon III')
 
-        town.connect(region_1, f'{dungeon} Dungeon I')
-        region_1.connect(region_2, f'{dungeon} Dungeon II')
-        region_2.connect(region_3, f'{dungeon} Dungeon III')
+        town.connect(dungeon_region, f'{dungeon} Dungeon Entrance')
+        town.connect(region_1, f'{dungeon} Dungeon I Entrance')
+        region_1.connect(region_2, f'{dungeon} Dungeon II Entrance')
+        region_2.connect(region_3, f'{dungeon} Dungeon III Entrance')
 
     for name in SHOP_NAMES:
         region = world.get_region(name)
-        town.connect(region, name)
+        town.connect(region, f"{name} Entrance")
 
     unknown_dungeon = world.get_region("Unknown Dungeon")
-    town.connect(unknown_dungeon, "Unknown Dungeon")
+    town.connect(unknown_dungeon, "Unknown Dungeon Entrance")

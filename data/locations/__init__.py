@@ -3,3 +3,5 @@ from . import golem_locations
 from . import forest_locations
 from . import desert_locations
 from . import tech_locations
+from . import hawker_locations
+from . import forge_locations

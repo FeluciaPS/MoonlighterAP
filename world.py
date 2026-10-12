@@ -1,7 +1,11 @@
 from collections.abc import Mapping
-from typing import Any
-from Options import OptionError
+from typing import Any, Optional
+from Options import Option, OptionError
 from worlds.AutoWorld import World
+
+from .data import equipment
+from .option_groups import EquipmentRandomizer, Goal, is_equipment_removed
+from .data.items import item_names
 
 from . import items, locations, options, regions, rules, web_world
 
@@ -26,6 +30,71 @@ class MoonlighterWorld(World):
     # Make UT generate without yaml
     ut_can_gen_without_yaml = True
 
+    # World properties
+    dungeon_order = ["Golem", "Forest", "Desert", "Tech"]
+    filler_equipment = []
+    decoration_items = item_names.DECORATION_ITEMS
+
+    def raise_unimplemented_option(self, name: str, option: str, required: bool = False):
+        if required:
+            raise OptionError(f"{name} must be set to {option}, because other options are unimplemented.")
+        else:
+            raise OptionError(f"{name} can't be set to {option}, because that option isn't implemented.")
+
+    # Mostly option validation goes on here
+    def generate_early(self) -> None:
+        # Unimplemented options
+        if self.options.equipment_randomizer != EquipmentRandomizer.option_progressive:
+            self.raise_unimplemented_option("Equipment Randomizer", "Progressive", True)
+
+        if self.options.goal == Goal.option_collector:
+            self.raise_unimplemented_option("Goal", "Collector")
+
+        # UT support
+        re_gen_passthrough = getattr(self.multiworld, "re_gen_passthrough", {})
+        if re_gen_passthrough and self.game in re_gen_passthrough:
+            # Get the passed through slot data from the real generation
+            slot_data: dict[str, Any] = re_gen_passthrough[self.game]
+
+            slot_options: dict[str, Any] = slot_data.get("options", {})
+            # Set all your options here instead of getting them from the yaml
+            for key, value in slot_options.items():
+                opt: Optional[Option] = getattr(self.options, key, None)
+                if opt is not None:
+                    # You can also set .value directly but that won't work if you have OptionSets
+                    setattr(self.options, key, opt.from_any(value))
+
+        # Shuffle and store the dungeon order, this will be used for combat logic later
+        if not(self.options.progressive_dungeons):
+            self.random.shuffle(self.dungeon_order)
+
+        # Fill equipment list
+        if "_allweapons" in self.options.included_equipment:
+            self.options.included_equipment.value.update(equipment.WEAPON_TYPES)
+
+        if "_allarmor" in self.options.included_equipment:
+            self.options.included_equipment.value.update(equipment.ARMOR_TYPES)
+
+        # Clear weapons from equipment list if broom only
+        if self.options.broom_only:
+            self.options.included_equipment.value &= set(equipment.ARMOR_TYPES)
+        
+        # Set up filler equipment to use later
+        excluded_equipment = (set(equipment.WEAPON_TYPES) | set(equipment.ARMOR_TYPES)) ^ self.options.included_equipment.value
+        if is_equipment_removed(self, "weapons"):
+            excluded_equipment &= set(equipment.ARMOR_TYPES)
+        if is_equipment_removed(self, "armor"):
+            excluded_equipment &= set(equipment.WEAPON_TYPES)
+        
+        for category in sorted(excluded_equipment):
+            if category.startswith("_"):
+                continue
+
+            self.filler_equipment += [
+                item_name
+                    for item_name in equipment.PROGRESSIVE_EQUIPMENT_ITEM_NAMES[category]
+                    for _ in range (4)
+            ]
 
     # TODO: this shouldn't end up in v1.0 but is a good catch during development
     def pre_fill(self) -> None:
@@ -39,9 +108,6 @@ class MoonlighterWorld(World):
             raise Exception(f"There are unreachable locations, please let Felucia know: {unreachable_locations}")
         if not len(self.multiworld.itempool):
             raise OptionError("There aren't any items in the item pool. Let Felucia know this is a bug.")
-
-    def generate_early(self) -> None:
-        pass
 
     def create_regions(self) -> None:
         regions.create_and_connect_regions(self)
@@ -65,10 +131,31 @@ class MoonlighterWorld(World):
     def fill_slot_data(self) -> Mapping[str, Any]:
         slot_data = dict()
 
+        # Pass the dungeon order into the mod
+        slot_data["dungeon_order"] = self.dungeon_order
+
         # Pass options into slot data for the mod to use
         slot_data["options"] = self.options.as_dict(
             "goal",
-            "death_link"
+            "require_bosses",
+            "progressive_dungeon_floors",
+            "progressive_dungeons",
+            "early_dungeon",
+            "require_sale",
+            "equipment_randomizer",
+            "included_equipment",
+            "excluded_equipment_behavior",
+            "broom_only",
+            "death_link",
+            "traps",
+            "trap_percentage",
+            "trap_weights"
         )
 
         return slot_data
+
+@staticmethod
+def interpret_slot_data(slot_data: dict[str, Any]) -> dict[str, Any]:
+    # Returning a truthy value here tells Universal Tracker to re-generate
+    # the world with the slot data
+    return slot_data

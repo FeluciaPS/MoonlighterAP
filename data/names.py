@@ -13,6 +13,13 @@ BOSS_NAMES = {
     "Tech": "Energy Flux"
 }
 
+MINIBOSS_NAMES = {
+    "Golem": "Golem Warrior",
+    "Forest": "Mavu Tree",
+    "Desert": "Hexa",
+    "Tech": "Oscillator"
+}
+
 SHOP_NAMES = [
     "Hawker", 
     "Le Retailer", 
